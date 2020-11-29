@@ -1,23 +1,21 @@
 package bgu.spl.mics;
 
-import bgu.spl.mics.application.services.C3POMicroservice;
-import bgu.spl.mics.application.services.HanSoloMicroservice;
-import bgu.spl.mics.application.services.LandoMicroservice;
-import bgu.spl.mics.application.services.LeiaMicroservice;
+import bgu.spl.mics.application.messages.AttackEvent;
+import bgu.spl.mics.application.services.*;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-
-class MessageBusImplTest {
+//empty tests according to office hours and forum requirements
+class MessageBusImplTest<T> {
     private MessageBus bus;
 
     @BeforeEach
     void setUp() {bus = new MessageBusImpl();    }
 
     @Test
-    void subscribeEvent() {  }
+    void subscribeEvent() {}
 
     @Test
     void subscribeBroadcast() {
@@ -42,17 +40,20 @@ class MessageBusImplTest {
         bus.sendBroadcast(br);
         try {
             assertNotNull(bus.awaitMessage(R2D2));
-            assertNotNull(bus.awaitMessage(R2D2));
+            assertNotNull(bus.awaitMessage(C3po));
         } catch (InterruptedException ignored) {}
     }
     @Test
     void sendEvent() {
         MicroService Han = new HanSoloMicroservice();
         bus.register(Han);
-        MicroService R2D2 = new HanSoloMicroservice();
-        bus.register(R2D2);
-        Event<Boolean> ev = new Event() {};
+        AttackEvent ev = new AttackEvent();
         bus.subscribeEvent(ev.getClass(),Han);
+        bus.sendEvent(ev);
+        try {
+            assertNotNull(bus.awaitMessage(Han));
+        } catch (InterruptedException ignored) {}
+
     }
 
     @Test
@@ -65,5 +66,13 @@ class MessageBusImplTest {
 
     @Test
     void awaitMessage() {
+        MicroService Han = new HanSoloMicroservice();
+        bus.register(Han);
+        AttackEvent ev = new AttackEvent();
+        bus.subscribeEvent(ev.getClass(),Han);
+        bus.sendEvent(ev);
+        try {
+            assertNotNull(bus.awaitMessage(Han));
+        } catch (InterruptedException ignored) {}
     }
 }
