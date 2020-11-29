@@ -27,17 +27,17 @@ public class FutureTest {
     public void testResolve(){
         String str = "someResult";
         assertFalse(future.isDone());
-        assertTrue(future.get(0, TimeUnit.MILLISECONDS)==null);
+        assertNull(future.get(0, TimeUnit.MILLISECONDS));
         future.resolve(str);
         assertTrue(future.isDone());
-        assertTrue(str.equals(future.get()));
+        assertEquals(future.get(), str);
     }
 
     @Test
     public void get(){
         String ans = "new result";
         future.resolve(ans);
-        assertTrue(ans.equals(future.get()));
+        assertEquals(future.get(), ans);
     }
 
     @Test
@@ -51,11 +51,11 @@ public class FutureTest {
 
     @Test
     public void get(long timeout, TimeUnit unit) {
-    assertFalse(future.isDone());
-    assertTrue(future.get(0, TimeUnit.MILLISECONDS)==null);
-    String ans = "resolved";
-    future.resolve("resolved");
-    assertTrue(ans.equals(future.get(2,TimeUnit.SECONDS)));
+        assertFalse(future.isDone());
+        assertNull(future.get(0, TimeUnit.MILLISECONDS));
+        String ans = "resolved";
+        future.resolve("resolved");
+        assertEquals(future.get(2, TimeUnit.SECONDS), ans);
 
     }
 
