@@ -29,4 +29,19 @@ public class FutureTest {
         assertTrue(future.isDone());
         assertTrue(str.equals(future.get()));
     }
+
+    @Test
+    public String get(){}
+
+    @Test
+    public boolean isDone(){}
+
+    @Test
+    public String get(long timeout, TimeUnit unit) {
+
+
+    }
+
+
+
 }

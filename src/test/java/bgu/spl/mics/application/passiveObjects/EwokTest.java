@@ -12,10 +12,6 @@ class EwokTest {
     void setUp() {
     }
 
-    @AfterEach
-    void tearDown() {
-    }
-
     @Test
     void acquire() {
 
