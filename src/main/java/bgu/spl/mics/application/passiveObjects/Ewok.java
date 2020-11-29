@@ -10,7 +10,10 @@ public class Ewok {
 	int serialNumber;
 	boolean available;
 	
-  
+    public Ewok(int _serialNumber){
+        serialNumber=_serialNumber;
+        available=true;
+    }
     /**
      * Acquires an Ewok
      */
