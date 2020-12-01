@@ -1,6 +1,7 @@
 package bgu.spl.mics;
 
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
 
@@ -11,8 +12,8 @@ import java.util.Queue;
  */
 public class MessageBusImpl implements MessageBus {
 
-	private HashMap<Class<? extends Message>, int[]> SubscribersMap;
-	private Queue<Message>[] queues;
+	private HashMap<Class<? extends Message>, Queue<Integer>> SubscribersMap;
+	private HashMap<String, Queue<Message>> QueueMap;
 
 	
 	@Override
@@ -56,5 +57,9 @@ public class MessageBusImpl implements MessageBus {
 	public Message awaitMessage(MicroService m) throws InterruptedException {
 		
 		return null;
+	}
+
+	public HashMap<String, Queue<Message>> QueueMap(){
+		return QueueMap;
 	}
 }
