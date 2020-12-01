@@ -12,8 +12,8 @@ import java.util.Queue;
  */
 public class MessageBusImpl implements MessageBus {
 
-	private HashMap<Class<? extends Message>, Queue<Integer>> SubscribersMap;
-	private HashMap<String, Queue<Message>> QueueMap;
+	private static HashMap<Class<? extends Message>, Queue<Integer>> SubscribersMap;
+	private static HashMap<String, Queue<Message>> QueueMap;
 
 	
 	@Override
