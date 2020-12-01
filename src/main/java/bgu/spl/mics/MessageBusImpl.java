@@ -1,6 +1,8 @@
 package bgu.spl.mics;
 
+import java.util.HashMap;
 import java.util.Map;
+import java.util.Queue;
 
 /**
  * The {@link MessageBusImpl class is the implementation of the MessageBus interface.
@@ -9,6 +11,8 @@ import java.util.Map;
  */
 public class MessageBusImpl implements MessageBus {
 
+	private HashMap<Class<? extends Message>, int[]> SubscribersMap;
+	private Queue<Message>[] queues;
 
 	
 	@Override

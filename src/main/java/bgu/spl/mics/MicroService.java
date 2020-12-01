@@ -28,7 +28,7 @@ public abstract class MicroService implements Runnable {
      *             does not have to be unique)
      */
     HashMap<Class<? extends Message>,Callback> map;
-    Queue
+    //Queue
     public MicroService(String name) {
     	map=new HashMap<>();
     }
