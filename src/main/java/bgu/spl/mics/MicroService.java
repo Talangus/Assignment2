@@ -32,9 +32,11 @@ public abstract class MicroService implements Runnable {
      *             does not have to be unique)
      */
     private Map<Class<? extends Message>,Callback> map;
+    String name;
 
-    public MicroService(String name) {
+    public MicroService(String _name) {
     	map=new HashMap<>();
+    	name=_name;
     }
 
     /**
@@ -99,7 +101,7 @@ public abstract class MicroService implements Runnable {
      * 	       			null in case no micro-service has subscribed to {@code e.getClass()}.
      */
     protected final <T> Future<T> sendEvent(Event<T> e) {
-
+        return MessageBusImpl.getInstance().sendEvent(e);
     }
 
     /**
@@ -109,7 +111,7 @@ public abstract class MicroService implements Runnable {
      * @param b The broadcast message to send
      */
     protected final void sendBroadcast(Broadcast b) {
-    	
+        return MessageBusImpl.getInstance().sendBroadcast(b);
     }
 
     /**
@@ -123,7 +125,7 @@ public abstract class MicroService implements Runnable {
      *               {@code e}.
      */
     protected final <T> void complete(Event<T> e, T result) {
-    	
+        MessageBusImpl.complete(e,T);
     }
 
     /**
@@ -136,7 +138,7 @@ public abstract class MicroService implements Runnable {
      * message.
      */
     protected final void terminate() {
-    	
+    	Thread.currentThread().stop();
     }
 
     /**
@@ -144,7 +146,7 @@ public abstract class MicroService implements Runnable {
      *         construction time and is used mainly for debugging purposes.
      */
     public final String getName() {
-        return null;
+        return name;
     }
 
     /**
@@ -153,7 +155,10 @@ public abstract class MicroService implements Runnable {
      */
     @Override
     public final void run() {
-    	
+        initialize();
+//        for(;;){
+//            Event e = MessageBusImpl.getInstance().awaitMessage(name);
+//        }
     }
 
 }
