@@ -12,7 +12,7 @@ class MessageBusImplTest<T> {
     private MessageBus bus;
 
     @BeforeEach
-    void setUp() {bus = new MessageBusImpl();    }
+    void setUp() {bus = new MessageBusImpl();}
 
     @Test
     void subscribeEvent() {}
