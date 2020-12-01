@@ -12,6 +12,7 @@ import java.util.Queue;
  */
 public class MessageBusImpl implements MessageBus {
 
+	private static MessageBus instance;
 	private static HashMap<Class<? extends Message>, Queue<Integer>> SubscribersMap;
 	private static HashMap<String, Queue<Message>> MessageQueueMap;
 
@@ -59,7 +60,9 @@ public class MessageBusImpl implements MessageBus {
 		return null;
 	}
 
-	public HashMap<String, Queue<Message>> MessageQueueMap(){
-		return MessageQueueMap;
+	public MessageBus getInstance() {
+		if (instance == null)
+			instance = new MessageBusImpl();
+		return instance;
 	}
 }
