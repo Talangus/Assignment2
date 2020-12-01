@@ -13,13 +13,15 @@ import java.util.Queue;
 public class MessageBusImpl implements MessageBus {
 
 	private static MessageBus instance;
-	private static HashMap<Class<? extends Message>, Queue<Integer>> SubscribersMap;
+	private static HashMap<Class<? extends Message>, Queue<String>> SubscribersMap;
 	private static HashMap<String, Queue<Message>> MessageQueueMap;
+	private static HashMap<Event<? extends Message>, Future<?>> EventFutrueMap;
 
 	
 	@Override
 	public <T> void subscribeEvent(Class<? extends Event<T>> type, MicroService m) {
-		
+		Queue<String> q = SubscribersMap.get(type);
+
 	}
 
 	@Override
@@ -60,9 +62,14 @@ public class MessageBusImpl implements MessageBus {
 		return null;
 	}
 
-	public MessageBus getInstance() {
+	public static MessageBus getInstance() {
 		if (instance == null)
 			instance = new MessageBusImpl();
 		return instance;
+	}
+
+	private <T> void hasQueue(Class<? extends Event<T>> type){
+		if(!SubscribersMap.containsValue(type))
+			SubscribersMap.put(type, new Queue<String>())
 	}
 }
