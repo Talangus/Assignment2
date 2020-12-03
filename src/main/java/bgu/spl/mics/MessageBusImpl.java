@@ -15,8 +15,8 @@ import java.util.concurrent.LinkedBlockingQueue;
 public class MessageBusImpl implements MessageBus {
 
 	private static MessageBus instance;
-	private  HashMap<Class<? extends Message>, Queue<String>> SubscribersMap;
-	private  HashMap<String, Queue<Message>> MessageQueueMap;
+	private  HashMap<Class<? extends Message>, Queue<MicroService>> SubscribersMap;
+	private  HashMap<MicroService, Queue<Message>> MessageQueueMap;
 	private  HashMap<Event, Future> EventFutrueMap;
 
 	
@@ -40,7 +40,7 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
-		
+
 	}
 
 	
@@ -70,6 +70,12 @@ public class MessageBusImpl implements MessageBus {
 		if (instance == null)
 			instance = new MessageBusImpl();
 		return instance;
+	}
+
+	private MessageBusImpl(){
+		SubscribersMap=new HashMap<>();
+		MessageQueueMap=new HashMap<>();
+		EventFutrueMap=new HashMap<>();
 	}
 
 	//checks if Message of type "type" has a queue in Sub map, creats one if it doesn't
