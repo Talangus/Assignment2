@@ -23,7 +23,6 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public <T> void subscribeEvent(Class<? extends Event<T>> type, MicroService m) {
 		subscribeMessage(type, m);
-
 	}
 
 	@Override
