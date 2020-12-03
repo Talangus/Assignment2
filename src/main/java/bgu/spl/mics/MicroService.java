@@ -33,13 +33,17 @@ public abstract class MicroService implements Runnable {
      *             does not have to be unique)
      */
     private Map<Class<? extends Message>,Callback> map;
-    String name;
-    Boolean readyToTerminate;
+    private String name;
+    private Boolean readyToTerminate;
+    protected Map<Event,Future> myEvents;
+    protected MessageBusImpl bus;                           //check if we can do it protected
 
     public MicroService(String _name) {
     	map=new HashMap<Class<? extends Message>,Callback>();
     	name=_name;
     	readyToTerminate=false;
+    	bus = MessageBusImpl.getInstance();
+    	myEvents = new HashMap<Event, Future>();
     }
 
     /**
@@ -104,7 +108,7 @@ public abstract class MicroService implements Runnable {
      * 	       			null in case no micro-service has subscribed to {@code e.getClass()}.
      */
     protected final <T> Future<T> sendEvent(Event<T> e) {
-        return MessageBusImpl.getInstance().sendEvent(e);
+        return bus.sendEvent(e);
     }
 
     /**
@@ -113,9 +117,7 @@ public abstract class MicroService implements Runnable {
      * <p>
      * @param b The broadcast message to send
      */
-    protected final void sendBroadcast(Broadcast b) {
-        MessageBusImpl.getInstance().sendBroadcast(b);
-    }
+    protected final void sendBroadcast(Broadcast b) { bus.sendBroadcast(b);}
 
     /**
      * Completes the received request {@code e} with the result {@code result}
@@ -128,7 +130,7 @@ public abstract class MicroService implements Runnable {
      *               {@code e}.
      */
     protected final <T> void complete(Event<T> e, T result) {
-        MessageBusImpl.getInstance().complete(e,result);
+        bus.complete(e,result);
     }
 
     /**
@@ -141,7 +143,7 @@ public abstract class MicroService implements Runnable {
      * message.
      */
     protected final void terminate() {
-        MessageBusImpl.getInstance().unregister(this);
+        bus.unregister(this);
     	readyToTerminate=true;
     }
 
