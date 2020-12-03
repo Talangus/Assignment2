@@ -19,7 +19,7 @@ public class Ewoks {
     private static Ewoks instance;
     private List<Ewok> ewoks;
 
-    public static Ewoks getInstance(int numofEwoks) {
+    public static Ewoks getInstance() {
         if(instance==null)
             instance=new Ewoks(Parser.getNumOfEwoks());
         return instance;
