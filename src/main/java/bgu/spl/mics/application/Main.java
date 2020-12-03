@@ -10,15 +10,6 @@ import java.util.LinkedList;
  */
 public class Main {
 	public static void main(String[] args) {
-		LinkedList<Integer> list = new LinkedList<>();
-		list.add(1);
-		list.add(2);
-		list.add(3);
-		list.add(4);
-		CircularIterator<Integer> iter = new CircularIterator<>(list);
-		for (int i = 0; i<10 ; i++){
-			System.out.println(iter.next());
 
-		}
 	}
 }

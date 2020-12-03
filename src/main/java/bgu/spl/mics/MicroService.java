@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 import java.util.Queue;
+import java.util.function.BinaryOperator;
 
 
 /**
@@ -33,10 +34,12 @@ public abstract class MicroService implements Runnable {
      */
     private Map<Class<? extends Message>,Callback> map;
     String name;
+    Boolean readyToTerminate;
 
     public MicroService(String _name) {
-    	map=new HashMap<>();
+    	map=new HashMap<Class<? extends Message>,Callback>();
     	name=_name;
+    	readyToTerminate=false;
     }
 
     /**
@@ -139,7 +142,7 @@ public abstract class MicroService implements Runnable {
      */
     protected final void terminate() {
         MessageBusImpl.getInstance().unregister(this);
-    	Thread.currentThread().stop();
+    	readyToTerminate=true;
     }
 
     /**
@@ -157,7 +160,7 @@ public abstract class MicroService implements Runnable {
     @Override
     public final void run() {
         initialize();
-//        for(;;){
+        while(!readyToTerminate){}
 //            Event e = MessageBusImpl.getInstance().awaitMessage(name);
 
 //        }

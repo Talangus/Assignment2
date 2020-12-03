@@ -17,7 +17,7 @@ public class Ewok {
     /**
      * Acquires an Ewok
      */
-    public void acquire() {
+    public synchronized void acquire() { // needs to be synchronized because and ewok cannot be apart of 2 attacks simultaneously
 	    if(available)
 	        available=false;
     }
@@ -25,7 +25,7 @@ public class Ewok {
     /**
      * release an Ewok
      */
-    public void release() {
+    public synchronized void release() {
     	if(!available)
     	    available=true;
     }
