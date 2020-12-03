@@ -2,6 +2,7 @@ package bgu.spl.mics.application.passiveObjects;
 
 
 import bgu.spl.mics.MessageBus;
+import bgu.spl.mics.application.misc.Parser;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -18,7 +19,7 @@ public class Ewoks {
     private static Ewoks instance;
     private List<Ewok> ewoks;
 
-    public static Ewoks getInstance() {
+    public static Ewoks getInstance(int numofEwoks) {
         if(instance==null)
             instance=new Ewoks(Parser.getNumOfEwoks());
         return instance;
@@ -30,4 +31,5 @@ public class Ewoks {
             ewoks.add(new Ewok(i));
         }
     }
+
 }
