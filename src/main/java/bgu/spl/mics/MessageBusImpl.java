@@ -17,7 +17,7 @@ public class MessageBusImpl implements MessageBus {
 	private static MessageBus instance;
 	private  HashMap<Class<? extends Message>, Queue<MicroService>> SubscribersMap;
 	private  HashMap<MicroService, LinkedBlockingQueue<Message>> MessageQueueMap;
-	private  HashMap<Event, Future> EventFutrueMap;
+	private  HashMap<Event, Future> EventFutureMap;
 
 	
 	@Override
@@ -32,7 +32,7 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override @SuppressWarnings("unchecked")
 	public <T> void complete(Event<T> e, T result) {
-		Future<T> temp = EventFutrueMap.get(e);
+		Future<T> temp = EventFutureMap.get(e);
 		if (temp != null)
 			temp.resolve(result);
 	}
@@ -40,6 +40,7 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public void sendBroadcast(Broadcast b) {
 		Queue<MicroService> q = SubscribersMap.get(b);
+		//null case
 		for (MicroService m:q) {
 			MessageQueueMap.get(m).add(b);
 		}
@@ -49,11 +50,12 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public <T> Future<T> sendEvent(Event<T> e) {
 		Queue<MicroService> q = SubscribersMap.get(e);
+		//null case
 		MicroService m = q.poll();							//Microservice is pulled and pushed back into the Queue for round robin
 		MessageQueueMap.get(m).add(e);
 		q.add(m);
 		Future<T> f = new Future<>();
-		EventFutrueMap.put(e,f);
+		EventFutureMap.put(e,f);
         return f;
 	}
 
@@ -84,7 +86,7 @@ public class MessageBusImpl implements MessageBus {
 	private MessageBusImpl(){
 		SubscribersMap=new HashMap<Class<? extends Message>, Queue<MicroService>>();
 		MessageQueueMap=new HashMap<MicroService,LinkedBlockingQueue<Message>>();
-		EventFutrueMap=new HashMap<Event, Future>();
+		EventFutureMap=new HashMap<Event, Future>();
 	}
 
 	//checks if Message of type "type" has a queue in Sub map, creates one if it doesn't

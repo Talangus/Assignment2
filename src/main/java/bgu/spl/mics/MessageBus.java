@@ -82,8 +82,8 @@ public interface MessageBus {
      * from its allocated queue.
      * This method is blocking meaning that if no messages
      * are available in the micro-service queue it
-     * should wait until a message becomes available.
-     * The method should throw the {@link IllegalStateException} in the case
+     * should w.
+     * The method should throw the {@link IllegalStateException until a message becomes availableteException} in the case
      * where {@code m} was never registered.
      * <p>
      * @param m The micro-service requesting to take a message from its message
