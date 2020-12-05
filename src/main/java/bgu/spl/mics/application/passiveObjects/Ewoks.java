@@ -25,11 +25,16 @@ public class Ewoks {
         return instance;
     }
 
+    public List<Ewok> getEwoks(){
+        return ewoks;
+    }
+
     private Ewoks(int numOfEwoks){
         ewoks = new LinkedList<>();
         for(int i=0; i<numOfEwoks;i++){
             ewoks.add(new Ewok(i));
         }
     }
+
 
 }

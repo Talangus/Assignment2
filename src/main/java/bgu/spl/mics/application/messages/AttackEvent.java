@@ -8,5 +8,7 @@ public class AttackEvent implements Event<Boolean> {
     public AttackEvent(Attack AttackObj){
         Attackinfo = AttackObj;
     }
+
+    public Attack getAttackinfo(){return Attackinfo;};
 	
 }
