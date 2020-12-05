@@ -18,16 +18,20 @@ public class Ewok {
      * Acquires an Ewok
      */
     public synchronized void acquire() { // needs to be synchronized because and ewok cannot be apart of 2 attacks simultaneously
-	    if(available)
-	        available=false;
+        while (!available) {
+            try { wait(); }
+            catch (InterruptedException e) {}
+        }
+        available = false;
     }
 
     /**
      * release an Ewok
      */
     public synchronized void release() {
-    	if(!available)
+    	if(!available){
     	    available=true;
+            notifyAll();
+    	}
     }
-
 }

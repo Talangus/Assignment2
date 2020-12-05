@@ -10,6 +10,8 @@ public class Parser {
     private long R2D2Duration;
     private long LandoDuration;
 
+    public Parser(){ }
+
     public static int getNumOfEwoks(){return Ewoks;}
     public void setNumOfEwoks(int ewoks){Ewoks=ewoks;}
 
