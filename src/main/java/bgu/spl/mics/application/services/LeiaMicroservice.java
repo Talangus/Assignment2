@@ -32,6 +32,7 @@ public class LeiaMicroservice extends MicroService {
     protected void initialize() {
     	bus.register(this);
     	subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
+
         SendAttacks();
     }
 

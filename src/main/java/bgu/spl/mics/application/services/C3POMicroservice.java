@@ -2,6 +2,7 @@ package bgu.spl.mics.application.services;
 
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.messages.AttackEvent;
+import bgu.spl.mics.application.messages.TerminationBrodcast;
 
 
 /**
@@ -20,6 +21,7 @@ public class C3POMicroservice extends MicroService {
 
     @Override
     protected void initialize() {
-
+        bus.register(this);
+        subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
     }
 }

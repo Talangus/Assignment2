@@ -40,9 +40,10 @@ public class MessageBusImpl implements MessageBus {
 	@Override
 	public void sendBroadcast(Broadcast b) {
 		Queue<MicroService> q = SubscribersMap.get(b);
-		//null case
-		for (MicroService m:q) {
-			MessageQueueMap.get(m).add(b);
+		if (q != null) {
+			for (MicroService m : q) {
+				MessageQueueMap.get(m).add(b);
+			}
 		}
 	}
 
