@@ -26,9 +26,12 @@ import java.io.Reader;
 public class Main {
 	public static void main(String[] args) throws FileNotFoundException {
 		Gson gson= new Gson();
-		JsonReader reader = new JsonReader(new FileReader(args[0]));
+		JsonReader reader = new JsonReader(new FileReader("/home/spl211/IdeaProjects/Assignment2/input.json"));
 		Parser parser = gson.fromJson(reader,Parser.class);
 		Ewoks ewoks = Ewoks.getInstance();
+		System.out.println(parser.getNumOfEwoks());
+		System.out.println(parser.getLandoDuration());
+		System.out.println(parser.getR2D2Duration());
 
 	}
 }
