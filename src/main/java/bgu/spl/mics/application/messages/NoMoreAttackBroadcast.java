@@ -1,5 +1,7 @@
 package bgu.spl.mics.application.messages;
 
-public class NoMoreAttackBroadcast {
+import bgu.spl.mics.Broadcast;
+
+public class NoMoreAttackBroadcast implements Broadcast {
 
 }
