@@ -6,25 +6,25 @@ import bgu.spl.mics.application.passiveObjects.Ewoks;
 
 public class Parser {
     private static int Ewoks;
-    private Attack[] attacks;
-    private long R2D2Duration;
-    private long LandoDuration;
+    private static Attack[] attacks;
+    private static long R2D2Duration;
+    private static long LandoDuration;
 
     public Parser(){ }
 
     public static int getNumOfEwoks(){return Ewoks;}
-    public void setNumOfEwoks(int ewoks){Ewoks=ewoks;}
+    public void setNumOfEwoks(int Ewoks){this.Ewoks=Ewoks;}
 
-    public long getLandoDuration() { return LandoDuration; }
-    public void setLandoDuration(long landoDuration) { LandoDuration = landoDuration; }
+    public static long getLandoDuration() { return LandoDuration; }
+    public void setLandoDuration(long Lando) { LandoDuration = Lando; }
 
-    public long getR2D2Duration() {
+    public static long getR2D2Duration() {
         return R2D2Duration;
     }
-    public void setR2D2Duration(long r2D2Duration) { R2D2Duration = r2D2Duration; }
+    public void setR2D2Duration(long R2D2) { R2D2Duration = R2D2; }
 
 
-    public Attack[] getAttacks() { return attacks; }
+    public static Attack[] getAttacks() { return attacks; }
     public void setAttacks(Attack[] attacks) { this.attacks = attacks; }
 
 
