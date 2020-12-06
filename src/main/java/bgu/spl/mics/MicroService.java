@@ -32,14 +32,14 @@ public abstract class MicroService implements Runnable {
      * @param name the micro-service name (used mainly for debugging purposes -
      *             does not have to be unique)
      */
-    private Map<Class<? extends Message>,Callback> map;
+    private Map<Class<? extends Message>,Callback> callbackMap;
     private String name;
     private Boolean readyToTerminate;
     protected Map<Event,Future> myEvents;
     protected MessageBusImpl bus;                           //check if we can do it protected
 
     public MicroService(String _name) {
-    	map=new HashMap<Class<? extends Message>,Callback>();
+    	callbackMap=new HashMap<Class<? extends Message>,Callback>();
     	name=_name;
     	readyToTerminate=false;
     	bus = MessageBusImpl.getInstance();
@@ -68,7 +68,7 @@ public abstract class MicroService implements Runnable {
      *                 queue.
      */
     protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
-    	map.put(type, callback);
+    	callbackMap.put(type, callback);
     }
 
     /**
@@ -92,7 +92,7 @@ public abstract class MicroService implements Runnable {
      *                 queue.
      */
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
-    	map.put(type, callback);
+    	callbackMap.put(type, callback);
     }
 
     /**
@@ -162,10 +162,15 @@ public abstract class MicroService implements Runnable {
     @Override
     public final void run() {
         initialize();
-        while(!readyToTerminate){}
-//            Event e = MessageBusImpl.getInstance().awaitMessage(name);
+        while(!readyToTerminate){
+            try {
+                Message m= bus.awaitMessage(this);
+                callbackMap.get(m.getClass()).call(m);//???????????????
+            } catch (InterruptedException e) { }
+        }
 
-//        }
+
     }
+
 
 }
