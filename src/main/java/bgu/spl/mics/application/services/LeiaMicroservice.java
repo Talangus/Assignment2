@@ -4,9 +4,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import bgu.spl.mics.Callback;
+import bgu.spl.mics.Event;
 import bgu.spl.mics.MessageBusImpl;
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.messages.AttackEvent;
+import bgu.spl.mics.application.messages.FinishedAttackingBrodcast;
 import bgu.spl.mics.application.messages.NoMoreAttackBroadcast;
 import bgu.spl.mics.application.messages.TerminationBrodcast;
 import bgu.spl.mics.application.passiveObjects.Attack;
@@ -33,7 +35,7 @@ public class LeiaMicroservice extends MicroService {
     protected void initialize() {
     	bus.register(this);
     	subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
-
+        subscribeBroadcast(FinishedAttackingBrodcast.class, (c -> CheckMyEvents()));
         SendAttacks();
         sendBroadcast(new NoMoreAttackBroadcast());
     }
@@ -44,8 +46,11 @@ public class LeiaMicroservice extends MicroService {
             myEvents.put(curr,sendEvent(curr));
         }
     }
-    private boolean CheckMyEvents(){
-
+    private void CheckMyEvents(){
+        for(Event key : myEvents.keySet()){
+            myEvents.get(key).get();
+            myEvents.remove(key);
+        }
     }
 
 }
