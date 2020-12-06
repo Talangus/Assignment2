@@ -25,5 +25,6 @@ public class C3POMicroservice extends MicroService {
         bus.register(this);
         subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
         subscribeEvent(AttackEvent.class,new AttackEventCallback());
+        subscribeBroadcast();
     }
 }
