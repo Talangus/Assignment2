@@ -1,7 +1,9 @@
 package bgu.spl.mics.application.services;
 
 import bgu.spl.mics.MicroService;
+import bgu.spl.mics.application.messages.DeactivationEvent;
 import bgu.spl.mics.application.messages.TerminationBrodcast;
+import bgu.spl.mics.application.misc.Parser;
 
 /**
  * R2D2Microservices is in charge of the handling {@link DeactivationEvent}.
@@ -21,6 +23,8 @@ public class R2D2Microservice extends MicroService {
     protected void initialize() {
         bus.register(this);
         subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
+        subscribeEvent(DeactivationEvent.class,(c ->
+        {try{ Thread.sleep(Parser.getR2D2Duration());} catch (InterruptedException e){}}));
 
     }
 }

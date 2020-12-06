@@ -20,5 +20,6 @@ public class AttackEventCallback implements Callback<AttackEvent> {
         for(int i = 0; i<resources.size(); i++){
             ewoks.get(i).release();
         }
+
     }
 }

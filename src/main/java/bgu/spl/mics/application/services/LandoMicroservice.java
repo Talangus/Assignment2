@@ -1,7 +1,9 @@
 package bgu.spl.mics.application.services;
 
 import bgu.spl.mics.MicroService;
+import bgu.spl.mics.application.messages.DeactivationEvent;
 import bgu.spl.mics.application.messages.TerminationBrodcast;
+import bgu.spl.mics.application.misc.Parser;
 
 /**
  * LandoMicroservice
@@ -18,5 +20,7 @@ public class LandoMicroservice  extends MicroService {
     protected void initialize() {
         bus.register(this);
         subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
+        subscribeEvent(DeactivationEvent.class,(c ->
+        {try{ Thread.sleep(Parser.getLandoDuration());} catch (InterruptedException e){}}));
     }
 }
