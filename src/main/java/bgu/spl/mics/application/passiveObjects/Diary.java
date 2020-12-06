@@ -13,12 +13,25 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Do not add to this class nothing but a single constructor, getters and setters.
  */
 public class Diary {
+    static Diary instance;
     AtomicInteger totalAttacks = new AtomicInteger(0);
     HashMap<MicroService,Long> attackersFinishTime;
     HashMap<MicroService,Long> terminationTimes;
     long R2D2Deactivate;
 
-    public void addMicroserviceTermination(MicroService m){}
+    public static Diary getInstance(){
+        if(instance==null)
+            instance=new Diary();
+        return instance;
+    }
+
+    private Diary(){
+        attackersFinishTime=new HashMap<>();
+        terminationTimes=new HashMap<>();
+    }
+
+    public void addTerminationTime(MicroService m, long time){terminationTimes.put(m,time);}
+    public void addAttackerFinishTime(MicroService m, long time){attackersFinishTime.put(m,time);}
 
     public void incrementTotalAttacks(){
         int val;

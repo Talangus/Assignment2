@@ -1,6 +1,7 @@
 package bgu.spl.mics;
 
 import bgu.spl.mics.application.misc.Packet;
+import bgu.spl.mics.application.passiveObjects.Diary;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -37,12 +38,14 @@ public abstract class MicroService implements Runnable {
     private Boolean readyToTerminate;
     protected Map<Event,Future> myEvents;
     protected MessageBusImpl bus;                           //check if we can do it protected
+    Diary diary;
 
     public MicroService(String _name) {
     	callbackMap=new HashMap<Class<? extends Message>,Callback>();
     	name=_name;
     	readyToTerminate=false;
     	bus = MessageBusImpl.getInstance();
+    	diary=Diary.getInstance();
     	myEvents = new HashMap<Event, Future>();
     }
 
