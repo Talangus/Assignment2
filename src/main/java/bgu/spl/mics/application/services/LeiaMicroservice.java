@@ -7,6 +7,7 @@ import bgu.spl.mics.Callback;
 import bgu.spl.mics.MessageBusImpl;
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.messages.AttackEvent;
+import bgu.spl.mics.application.messages.NoMoreAttackBroadcast;
 import bgu.spl.mics.application.messages.TerminationBrodcast;
 import bgu.spl.mics.application.passiveObjects.Attack;
 
@@ -34,6 +35,7 @@ public class LeiaMicroservice extends MicroService {
     	subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
 
         SendAttacks();
+        sendBroadcast(new NoMoreAttackBroadcast());
     }
 
     private void SendAttacks(){
@@ -41,6 +43,9 @@ public class LeiaMicroservice extends MicroService {
             AttackEvent curr = new AttackEvent(obj);
             myEvents.put(curr,sendEvent(curr));
         }
+    }
+    private boolean CheckMyEvents(){
+
     }
 
 }
