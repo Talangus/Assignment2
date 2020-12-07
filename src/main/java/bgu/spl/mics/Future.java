@@ -32,11 +32,7 @@ public class Future<T> {
      */
 	public T get() {
 		if (!isDone) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			}
+			try {wait();} catch (InterruptedException e) {}
 		}
 		return result;
 	}
@@ -44,7 +40,7 @@ public class Future<T> {
      * Resolves the result of this Future object.
      */
 	public void resolve (T result) {
-		result=result;
+		this.result=result;
 		isDone=true;
 		notify();
 	}
@@ -67,10 +63,10 @@ public class Future<T> {
      * 	       wait for {@code timeout} TimeUnits {@code unit}. If time has
      *         elapsed, return null.
      */
-//	public T get(long timeout, TimeUnit unit) {
-//		if(isDone)
-//			return result;
-//		wait();
-//	}
-
+	public T get(long timeout, TimeUnit unit) {
+		if(isDone)
+			return result;
+		try {unit.sleep(timeout);} catch (InterruptedException e){};
+		return null;
+	}
 }
