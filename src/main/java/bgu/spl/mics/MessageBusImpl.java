@@ -39,7 +39,7 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
-		Queue<MicroService> q = SubscribersMap.get(b);
+		Queue<MicroService> q = SubscribersMap.get(b.getClass());
 		if (q != null) {
 			for (MicroService m : q) {
 				MessageQueueMap.get(m).add(b);
@@ -102,6 +102,7 @@ public class MessageBusImpl implements MessageBus {
 		Queue<MicroService> subscribersQueue = getQueuefromSubMap(type);						//gets the message's microservice queue
 		if (!subscribersQueue.contains(m))
 			subscribersQueue.add(m);
+		notifyAll();
 	}
 
 	//makes sure that events of type "type" has subscribers before it is sent
