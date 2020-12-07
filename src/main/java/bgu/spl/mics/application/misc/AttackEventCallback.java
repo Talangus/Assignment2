@@ -2,6 +2,7 @@ package bgu.spl.mics.application.misc;
 
 import bgu.spl.mics.Callback;
 import bgu.spl.mics.application.messages.AttackEvent;
+import bgu.spl.mics.application.passiveObjects.Diary;
 import bgu.spl.mics.application.passiveObjects.Ewok;
 import bgu.spl.mics.application.passiveObjects.Ewoks;
 
@@ -20,8 +21,7 @@ public class AttackEventCallback implements Callback<AttackEvent> {
         for(int i = 0; i<resources.size(); i++){
             ewoks.get(i).release();
         }
-
-
-
+        Diary diary=Diary.getInstance();
+        diary.incrementTotalAttacks();
     }
 }
