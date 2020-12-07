@@ -17,6 +17,7 @@ import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 import java.io.FileReader;
+import java.util.concurrent.TimeUnit;
 
 /** This is the Main class of the application. You should parse the input file,
  * create the different components of the application, and run the system.
@@ -31,7 +32,8 @@ public class Main {
 
 
 		Future<Boolean> f1 = new Future<>();
+		System.out.println(f1.get(3,TimeUnit.SECONDS));
+		f1.resolve(true);
 		System.out.println(f1.get());
-
 	}
 }
