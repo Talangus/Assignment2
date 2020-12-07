@@ -37,7 +37,7 @@ public class Ewoks {
         }
     }
 
-     public void createEwoks(int numOfEwoks){
+     public static void createEwoks(int numOfEwoks){
         numOfEwoks=numOfEwoks;
      }
 }

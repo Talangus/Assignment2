@@ -1,10 +1,14 @@
 package bgu.spl.mics.application;
 
-import bgu.spl.mics.Future;
+import bgu.spl.mics.MessageBus;
+import bgu.spl.mics.MessageBusImpl;
+import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.misc.CircularIterator;
 import bgu.spl.mics.application.misc.Input;
 import bgu.spl.mics.application.misc.Parser;
 import bgu.spl.mics.application.passiveObjects.Ewoks;
+import bgu.spl.mics.application.services.HanSoloMicroservice;
+import bgu.spl.mics.application.services.LeiaMicroservice;
 import com.google.gson.JsonParser;
 
 import java.io.*;
@@ -24,14 +28,57 @@ import java.io.FileReader;
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
-		Gson gson = new Gson();
-		JsonReader reader = new JsonReader(new FileReader("/home/spl211/IdeaProjects/Assignment2/input.json"));
-		Input input = gson.fromJson(reader,Input.class);
-		System.out.println(input.getEwoks());
-
-
-		Future<Boolean> f1 = new Future<>();
-		System.out.println(f1.get());
+		Input input=Parser.getInputFromJson("/home/spl211/IdeaProjects/Assignment2/input.json");
+		MessageBus bus=MessageBusImpl.getInstance();
+		Ewoks.createEwoks(input.getEwoks());
+		Ewoks ewoks = Ewoks.getInstance();
+		MicroService leah = new LeiaMicroservice(input.getAttacks());
+		MicroService han = new HanSoloMicroservice();
+		
 
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
