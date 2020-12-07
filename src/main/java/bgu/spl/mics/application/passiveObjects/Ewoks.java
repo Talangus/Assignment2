@@ -20,9 +20,13 @@ public class Ewoks {
     private List<Ewok> ewoks;
     private int numOfEwoks;
 
-    public static Ewoks getInstance() {
+    public static Ewoks getInstance(){
+        return createInstance(0);
+    }
+
+    public static Ewoks createInstance(int numOfEwoks) {
         if(instance==null)
-            instance=new Ewoks();
+            instance=new Ewoks(numOfEwoks);
         return instance;
     }
 
@@ -30,14 +34,12 @@ public class Ewoks {
         return ewoks;
     }
 
-    private Ewoks(){
+    private Ewoks(int numOfEwoks){
+        this.numOfEwoks=numOfEwoks;
         ewoks = new LinkedList<>();
         for(int i=0; i<numOfEwoks;i++){
             ewoks.add(new Ewok(i));
         }
     }
 
-     public static void createEwoks(int numOfEwoks){
-        numOfEwoks=numOfEwoks;
-     }
 }

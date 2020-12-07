@@ -30,8 +30,7 @@ public class Main {
 	public static void main(String[] args) throws IOException {
 		Input input=Parser.getInputFromJson("/home/spl211/IdeaProjects/Assignment2/input.json");
 		MessageBus bus=MessageBusImpl.getInstance();
-		Ewoks.createEwoks(input.getEwoks());
-		Ewoks ewoks = Ewoks.getInstance();
+		Ewoks ewoks = Ewoks.createInstance(input.getEwoks());
 		MicroService leah = new LeiaMicroservice(input.getAttacks());
 		MicroService han = new HanSoloMicroservice();
 		
