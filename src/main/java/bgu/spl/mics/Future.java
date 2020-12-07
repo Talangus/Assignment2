@@ -30,21 +30,17 @@ public class Future<T> {
      * @return return the result of type T if it is available, if not wait until it is available.
      * 	       
      */
-	public T get()  {
-		if(!isDone) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} InterruptedException{}
+	public T get() {
+		if (!isDone) {
+			try {wait();} catch (InterruptedException e) {}
 		}
+		return result;
 	}
-	
 	/**
      * Resolves the result of this Future object.
      */
 	public void resolve (T result) {
-		result=result;
+		this.result=result;
 		isDone=true;
 		notify();
 	}
@@ -70,7 +66,7 @@ public class Future<T> {
 	public T get(long timeout, TimeUnit unit) {
 		if(isDone)
 			return result;
-//		wait(unit.toMillis());
+		try {unit.sleep(timeout);} catch (InterruptedException e){};
+		return null;
 	}
-
 }

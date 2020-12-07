@@ -172,8 +172,6 @@ public abstract class MicroService implements Runnable {
                 callbackMap.get(m.getClass()).call(m);//???????????????
             } catch (InterruptedException e) { }
         }
-
-
     }
 
 
