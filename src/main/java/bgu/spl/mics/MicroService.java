@@ -38,7 +38,7 @@ public abstract class MicroService implements Runnable {
     private Boolean readyToTerminate;
     protected Map<Event,Future> myEvents;
     protected MessageBusImpl bus;                           //check if we can do it protected
-    Diary diary;
+    protected Diary diary;
 
     public MicroService(String _name) {
     	callbackMap=new HashMap<Class<? extends Message>,Callback>();
@@ -148,6 +148,7 @@ public abstract class MicroService implements Runnable {
     protected final void terminate() {
         bus.unregister(this);
     	readyToTerminate=true;
+    	diary.addTerminationTime(this,System.currentTimeMillis());
     }
 
     /**

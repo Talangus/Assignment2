@@ -3,6 +3,8 @@ package bgu.spl.mics.application.services;
 
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.messages.AttackEvent;
+import bgu.spl.mics.application.messages.FinishedAttackingBrodcast;
+import bgu.spl.mics.application.messages.NoMoreAttackBroadcast;
 import bgu.spl.mics.application.messages.TerminationBrodcast;
 import bgu.spl.mics.application.misc.AttackEventCallback;
 
@@ -26,5 +28,6 @@ public class HanSoloMicroservice extends MicroService {
         bus.register(this);
         subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
         subscribeEvent(AttackEvent.class,new AttackEventCallback());
+        subscribeBroadcast(NoMoreAttackBroadcast.class, c->{ diary.addAttackerFinishTime(this,System.currentTimeMillis()); });
     }
 }
