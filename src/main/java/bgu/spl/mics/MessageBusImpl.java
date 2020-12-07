@@ -98,7 +98,7 @@ public class MessageBusImpl implements MessageBus {
 		}
 		return q;
 	}
-	private void subscribeMessage(Class<? extends Message> type, MicroService m){
+	private synchronized void subscribeMessage(Class<? extends Message> type, MicroService m){
 		Queue<MicroService> subscribersQueue = getQueuefromSubMap(type);						//gets the message's microservice queue
 		if (!subscribersQueue.contains(m))
 			subscribersQueue.add(m);

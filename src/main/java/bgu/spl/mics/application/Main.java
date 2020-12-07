@@ -1,5 +1,6 @@
 package bgu.spl.mics.application;
 
+import bgu.spl.mics.Future;
 import bgu.spl.mics.application.misc.CircularIterator;
 import bgu.spl.mics.application.misc.Input;
 import bgu.spl.mics.application.misc.Parser;
@@ -27,5 +28,10 @@ public class Main {
 		JsonReader reader = new JsonReader(new FileReader("/home/spl211/IdeaProjects/Assignment2/input.json"));
 		Input input = gson.fromJson(reader,Input.class);
 		System.out.println(input.getEwoks());
+
+
+		Future<Boolean> f1 = new Future<>();
+		System.out.println(f1.get());
+
 	}
 }
