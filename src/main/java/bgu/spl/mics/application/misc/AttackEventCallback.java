@@ -21,5 +21,7 @@ public class AttackEventCallback implements Callback<AttackEvent> {
             ewoks.get(i).release();
         }
 
+
+
     }
 }

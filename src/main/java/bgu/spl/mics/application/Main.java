@@ -23,9 +23,7 @@ import java.io.FileReader;
  */
 public class Main {
 	public static void main(String[] args) throws IOException {
-		Gson gson = new Gson();
-		JsonReader reader = new JsonReader(new FileReader("/home/spl211/IdeaProjects/Assignment2/input.json"));
-		Input input = gson.fromJson(reader,Input.class);
-		System.out.println(input.getEwoks());
+		Input input=Parser.getInputFromJson("/home/spl211/IdeaProjects/Assignment2/input.json");
+		System.out.println(input.getLando());
 	}
 }
