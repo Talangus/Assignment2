@@ -1,8 +1,10 @@
 package bgu.spl.mics.application.services;
 
 import bgu.spl.mics.MicroService;
+import bgu.spl.mics.application.messages.BombDestroyerEvent;
 import bgu.spl.mics.application.messages.DeactivationEvent;
 import bgu.spl.mics.application.messages.TerminationBrodcast;
+import bgu.spl.mics.application.misc.Input;
 import bgu.spl.mics.application.misc.Parser;
 
 /**
@@ -15,8 +17,11 @@ import bgu.spl.mics.application.misc.Parser;
  */
 public class R2D2Microservice extends MicroService {
 
+    private long duration;
+
     public R2D2Microservice(long duration) {
         super("R2D2");
+        this.duration=duration;
     }
 
     @Override
@@ -24,7 +29,10 @@ public class R2D2Microservice extends MicroService {
         bus.register(this);
         subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
         subscribeEvent(DeactivationEvent.class,(c ->
-        {try{ Thread.sleep(Parser.getR2D2Duration());} catch (InterruptedException e){}}));
+        {try{ Thread.sleep(duration);} catch (InterruptedException e){}
+        diary.setR2D2Deactivate(System.currentTimeMillis());
+        sendEvent(new BombDestroyerEvent());
+        }));
 
     }
 }

@@ -32,6 +32,7 @@ public class Diary {
 
     public void addTerminationTime(MicroService m, long time){terminationTimes.put(m,time);}
     public void addAttackerFinishTime(MicroService m, long time){attackersFinishTime.put(m,time);}
+    public void setR2D2Deactivate(long time){R2D2Deactivate=time;}
 
     public void incrementTotalAttacks(){
         int val;
