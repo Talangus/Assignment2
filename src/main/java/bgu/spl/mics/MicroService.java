@@ -72,6 +72,7 @@ public abstract class MicroService implements Runnable {
      */
     protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
     	callbackMap.put(type, callback);
+    	bus.subscribeEvent(type,this);
     }
 
     /**
@@ -96,6 +97,7 @@ public abstract class MicroService implements Runnable {
      */
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
     	callbackMap.put(type, callback);
+    	bus.subscribeBroadcast(type,this);
     }
 
     /**
@@ -166,12 +168,12 @@ public abstract class MicroService implements Runnable {
     @Override
     public final void run() {
         initialize();
-        while(!readyToTerminate){
-            try {
-                Message m= bus.awaitMessage(this);
-                callbackMap.get(m.getClass()).call(m);//???????????????
-            } catch (InterruptedException e) { }
-        }
+//        while(!readyToTerminate){
+//            try {
+//                Message m= bus.awaitMessage(this);
+//                callbackMap.get(m.getClass()).call(m);//???????????????
+//            } catch (InterruptedException e) { }
+//        }
     }
 
 

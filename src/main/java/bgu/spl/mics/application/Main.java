@@ -6,6 +6,7 @@ import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.misc.CircularIterator;
 import bgu.spl.mics.application.misc.Input;
 import bgu.spl.mics.application.misc.Parser;
+import bgu.spl.mics.application.passiveObjects.Diary;
 import bgu.spl.mics.application.passiveObjects.Ewoks;
 import bgu.spl.mics.application.services.HanSoloMicroservice;
 import bgu.spl.mics.application.services.LeiaMicroservice;
@@ -31,10 +32,11 @@ public class Main {
 		Input input=Parser.getInputFromJson("/home/spl211/IdeaProjects/Assignment2/input.json");
 		MessageBus bus=MessageBusImpl.getInstance();
 		Ewoks ewoks = Ewoks.createInstance(input.getEwoks());
+		Diary diary= Diary.getInstance();
+	   	MicroService han = new HanSoloMicroservice();
+  		han.run();
 		MicroService leah = new LeiaMicroservice(input.getAttacks());
-		MicroService han = new HanSoloMicroservice();
-		
-
+ 		leah.run();                                                                          
 	}
 }
 

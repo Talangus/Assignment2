@@ -25,6 +25,7 @@ public class Ewok {
         available = false;
     }
 
+    public int getSerialNumber(){return serialNumber;}
     /**
      * release an Ewok
      */

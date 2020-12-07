@@ -6,6 +6,7 @@ import bgu.spl.mics.application.passiveObjects.Diary;
 import bgu.spl.mics.application.passiveObjects.Ewok;
 import bgu.spl.mics.application.passiveObjects.Ewoks;
 
+import java.util.Comparator;
 import java.util.List;
 
 public class AttackEventCallback implements Callback<AttackEvent> {
@@ -14,6 +15,12 @@ public class AttackEventCallback implements Callback<AttackEvent> {
         int duration = c.getAttackinfo().getDuration();
         Ewoks EwoksInstance = Ewoks.getInstance();
         List<Ewok> ewoks = EwoksInstance.getEwoks();
+        ewoks.sort(new Comparator<Ewok>() {
+            @Override
+            public int compare(Ewok o1, Ewok o2) {
+                return o1.getSerialNumber()-o2.getSerialNumber();
+            }
+        });
         for(int i = 0; i<resources.size(); i++){                        //ewoks is ordered, thus resources acquiring is ordered to prevent deadlocks.
             ewoks.get(i).acquire();
         }
