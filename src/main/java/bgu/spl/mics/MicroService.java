@@ -1,13 +1,9 @@
 package bgu.spl.mics;
 
-import bgu.spl.mics.application.misc.Packet;
 import bgu.spl.mics.application.passiveObjects.Diary;
 
 import java.util.HashMap;
-import java.util.LinkedList;
 import java.util.Map;
-import java.util.Queue;
-import java.util.function.BinaryOperator;
 
 
 /**
@@ -170,7 +166,7 @@ public abstract class MicroService implements Runnable {
         while(!readyToTerminate){
             try {
                 Message m= bus.awaitMessage(this);
-                System.out.println(getName()+":");
+//                System.out.println(getName()+":");!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 callbackMap.get(m.getClass()).call(m);//???????????????
             } catch (InterruptedException e) { }
         }

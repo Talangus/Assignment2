@@ -27,8 +27,8 @@ public class HanSoloMicroservice extends MicroService {
     protected void initialize() {
         bus.register(this);
         subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setHanSoloTerminate(System.currentTimeMillis());});
-        subscribeBroadcast(NoMoreAttackBroadcast.class, c->{ diary.setHanSoloFinish(System.currentTimeMillis());
-        System.out.println("Han send finished attacking broadcast"); });
+        subscribeBroadcast(NoMoreAttackBroadcast.class, c->{ diary.setHanSoloFinish(System.currentTimeMillis());});
+//        System.out.println("Han send finished attacking broadcast"); });
         subscribeEvent(AttackEvent.class,new AttackEventCallback());
     }
 }

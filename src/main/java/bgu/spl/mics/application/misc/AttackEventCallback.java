@@ -14,7 +14,7 @@ import java.util.List;
 
 public class AttackEventCallback implements Callback<AttackEvent> {
     public void call(AttackEvent c){
-        System.out.println("attack");//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+//        System.out.println("attack");//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         List<Integer> resources = c.getAttackinfo().getSerials();
         int duration = c.getAttackinfo().getDuration();
         Ewoks EwoksInstance = Ewoks.getInstance();
@@ -35,7 +35,7 @@ public class AttackEventCallback implements Callback<AttackEvent> {
         MessageBusImpl.getInstance().complete(c,true);
         Diary diary=Diary.getInstance();
         diary.incrementTotalAttacks();
-        System.out.println("Total attacks now: "+diary.getTotalAttacks());
+//        System.out.println("Total attacks now: "+diary.getTotalAttacks());
 
     }
 }

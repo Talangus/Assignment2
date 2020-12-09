@@ -16,11 +16,11 @@ public class Diary {
 
     AtomicInteger totalAttacks = new AtomicInteger(0);
     long HanSoloFinish;
-    long C3P0Finish;
+    long C3POFinish;
     long R2D2Deactivate;
     long LeiaTerminate;
     long HanSoloTerminate;
-    long C3P0Terminate;
+    long C3POTerminate;
     long R2D2Terminate;
     long LandoTerminate;
 
@@ -36,10 +36,10 @@ public class Diary {
     }
 
     public void setHanSoloFinish(long duration){HanSoloFinish=duration;}
-    public void setC3P0Finish(long duration){C3P0Finish=duration;}
+    public void setC3P0Finish(long duration){C3POFinish=duration;}
     public void setLeiaTerminate(long duration){LeiaTerminate=duration;}
     public void setHanSoloTerminate(long duration){HanSoloTerminate=duration;}
-    public void setC3P0Terminate(long duration){C3P0Terminate=duration;}
+    public void setC3P0Terminate(long duration){C3POTerminate=duration;}
     public void setR2D2Terminate(long duration){R2D2Terminate=duration;}
     public void setLandoTerminate(long duration){LandoTerminate=duration;}
     public void setR2D2Deactivate(long time){R2D2Deactivate=time;}

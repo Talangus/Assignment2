@@ -3,7 +3,6 @@ package bgu.spl.mics.application;
 import bgu.spl.mics.MessageBus;
 import bgu.spl.mics.MessageBusImpl;
 import bgu.spl.mics.MicroService;
-import bgu.spl.mics.application.misc.CircularIterator;
 import bgu.spl.mics.application.misc.Input;
 import bgu.spl.mics.application.misc.Parser;
 import bgu.spl.mics.application.passiveObjects.Diary;
@@ -12,13 +11,6 @@ import bgu.spl.mics.application.services.*;
 import com.google.gson.*;
 
 import java.io.*;
-import java.util.LinkedList;
-
-import com.google.gson.JsonParser;
-import com.google.gson.stream.JsonReader;
-
-import java.io.FileReader;
-import java.util.Map;
 
 /** This is the Main class of the application. You should parse the input file,
  * create the different components of the application, and run the system.
