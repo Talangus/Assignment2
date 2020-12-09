@@ -50,8 +50,8 @@ public class LeiaMicroservice extends MicroService {
     private void CheckMyEvents(){
         System.out.println("checking events");
         for(Event key : myEvents.keySet()){
+            System.out.println(myEvents.get(key).isDone());
             myEvents.get(key).get();
-            myEvents.remove(key);
         }
 
         System.out.println("sending deactivation event");//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
