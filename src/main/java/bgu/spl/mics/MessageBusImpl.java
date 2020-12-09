@@ -107,7 +107,7 @@ public class MessageBusImpl implements MessageBus {
 
 	//makes sure that events of type "type" has subscribers before it is sent
 	private synchronized <T> Queue<MicroService> checkSubscribers(Class<? extends Event> type){
-		while (SubscribersMap.get(type)==null){
+		while (SubscribersMap.get(type)==null || SubscribersMap.get(type).isEmpty()){
 			try{wait();}catch (InterruptedException e){};
 		}
 		return SubscribersMap.get(type);
