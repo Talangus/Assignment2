@@ -35,14 +35,20 @@ public class Diary {
     }
 
     private Diary(){
-        attackersFinishTime=new HashMap<>();
-        terminationTimes=new HashMap<>();
+//        attackersFinishTime=new HashMap<>();
+//        terminationTimes=new HashMap<>();
     }
 
-    public void addTerminationTime(MicroService m, long time){terminationTimes.put(m,time);}
-    public void addAttackerFinishTime(MicroService m, long time){attackersFinishTime.put(m,time);}
+//    public void addTerminationTime(MicroService m, long time){terminationTimes.put(m,time);}
+//    public void addAttackerFinishTime(MicroService m, long time){attackersFinishTime.put(m,time);}
 
-    public void se
+    public void setHanSoloFinish(long duration){HanSoloFinish=duration;}
+    public void setC3P0Finish(long duration){C3P0Finish=duration;}
+    public void setLeiaTerminate(long duration){LeiaTerminate=duration;}
+    public void setHanSoloTerminate(long duration){HanSoloTerminate=duration;}
+    public void setC3P0Terminate(long duration){C3P0Finish=duration;}
+    public void setR2D2Terminate(long duration){R2D2Terminate=duration;}
+    public void setLandoTerminate(long duration){LandoTerminate=duration;}
     public void setR2D2Deactivate(long time){R2D2Deactivate=time;}
 
 
