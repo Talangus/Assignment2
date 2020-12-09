@@ -29,9 +29,12 @@ public class R2D2Microservice extends MicroService {
         bus.register(this);
         subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
         subscribeEvent(DeactivationEvent.class,(c ->
-        {try{ Thread.sleep(duration);} catch (InterruptedException e){}
-        diary.setR2D2Deactivate(System.currentTimeMillis());
-        sendEvent(new BombDestroyerEvent());
+        {
+            try{ Thread.sleep(duration);}
+            catch (InterruptedException e){}
+            System.out.printf("r2d2 boker tov");
+            diary.setR2D2Deactivate(System.currentTimeMillis());
+            sendEvent(new BombDestroyerEvent());
             System.out.println("deactivation");//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }));
 

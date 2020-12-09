@@ -9,18 +9,16 @@ import bgu.spl.mics.application.misc.Parser;
 import bgu.spl.mics.application.passiveObjects.Diary;
 import bgu.spl.mics.application.passiveObjects.Ewoks;
 import bgu.spl.mics.application.services.*;
-import com.google.gson.JsonParser;
+import com.google.gson.*;
 
 import java.io.*;
 import java.util.LinkedList;
 
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
-import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.google.gson.stream.JsonReader;
 
 import java.io.FileReader;
+import java.util.Map;
 
 /** This is the Main class of the application. You should parse the input file,
  * create the different components of the application, and run the system.
@@ -28,7 +26,7 @@ import java.io.FileReader;
  */
 public class Main {
 	public static void main(String[] args) throws IOException, InterruptedException {
-		Input input=Parser.getInputFromJson("/home/spl211/IdeaProjects/Assignment2/input.json");
+		Input input=Parser.getInputFromJson(args[0]);
 		MessageBus bus=MessageBusImpl.getInstance();
 		Ewoks ewoks = Ewoks.createInstance(input.getEwoks());
 		Diary diary= Diary.getInstance();
@@ -41,20 +39,24 @@ public class Main {
 		Thread threadHan= new Thread(han);
 		Thread threadC3P0 = new Thread(c3p0);
 		Thread threadR2D2= new Thread(r2D2);
-//		Thread threadLando = new Thread(lando);
+		Thread threadLando = new Thread(lando);
 		threadHan.start();
 		threadC3P0.start();
 		threadLeah.start();
 		threadR2D2.start();
-//		threadLando.start();
-//		{
-//			threadLeah.join();
-//			threadHan.join();
-//			threadC3P0.join();
-//			threadR2D2.join();
-//			threadLando.join();
-//		}
-//		System.out.print("attacks"+diary.getTotalAttacks());
+		threadLando.start();
+		try{
+			threadHan.join();
+			threadC3P0.join();
+			threadLando.join();
+			threadLeah.join();
+			threadR2D2.join();
+		}catch (InterruptedException e){}
+		Gson gson = new GsonBuilder().setPrettyPrinting().create();
+		FileWriter writer = new FileWriter("/home/spl211/output.json");
+		gson.toJson(diary,writer);
+		writer.flush();
+		writer.close();
 	}
 }
 

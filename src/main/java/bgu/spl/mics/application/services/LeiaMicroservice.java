@@ -36,9 +36,10 @@ public class LeiaMicroservice extends MicroService {
     protected void initialize() {
     	bus.register(this);
     	subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
-        subscribeBroadcast(FinishedAttackingBrodcast.class, (c -> { System.out.println("got finished attacking event"); CheckMyEvents(); }));
+//        subscribeBroadcast(FinishedAttackingBrodcast.class, (c -> { System.out.println("got finished attacking event"); CheckMyEvents(); }));
         SendAttacks();
         sendBroadcast(new NoMoreAttackBroadcast());
+        CheckMyEvents();
     }
 
     private void SendAttacks(){
@@ -53,7 +54,6 @@ public class LeiaMicroservice extends MicroService {
             System.out.println(myEvents.get(key).isDone());
             myEvents.get(key).get();
         }
-
         System.out.println("sending deactivation event");//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         sendEvent(new DeactivationEvent());
     }
