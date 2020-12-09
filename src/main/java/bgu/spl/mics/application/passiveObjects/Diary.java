@@ -13,10 +13,8 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Do not add to this class nothing but a single constructor, getters and setters.
  */
 public class Diary {
-    // For framework reasons the fields are maps so that if we  were to add multiple microservices we can do so easily and track there termination times
+
     AtomicInteger totalAttacks = new AtomicInteger(0);
-//    HashMap<MicroService,Long> attackersFinishTime;
-//    HashMap<MicroService,Long> terminationTimes;
     long HanSoloFinish;
     long C3P0Finish;
     long R2D2Deactivate;
@@ -35,12 +33,7 @@ public class Diary {
     }
 
     private Diary(){
-//        attackersFinishTime=new HashMap<>();
-//        terminationTimes=new HashMap<>();
     }
-
-//    public void addTerminationTime(MicroService m, long time){terminationTimes.put(m,time);}
-//    public void addAttackerFinishTime(MicroService m, long time){attackersFinishTime.put(m,time);}
 
     public void setHanSoloFinish(long duration){HanSoloFinish=duration;}
     public void setC3P0Finish(long duration){C3P0Finish=duration;}
