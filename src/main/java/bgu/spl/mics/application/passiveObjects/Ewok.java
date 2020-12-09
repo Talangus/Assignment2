@@ -17,8 +17,8 @@ public class Ewok {
     /**
      * Acquires an Ewok
      */
-    public synchronized void acquire() { // needs to be synchronized because and ewok cannot be apart of 2 attacks simultaneously
-        while (!available) {
+    public synchronized void acquire() { // needs to be synchronized because an ewok cannot be apart of 2 attacks simultaneously
+        while (!available) {               //if not synchronized there can be instances that 2 threads will acquire the ewok
             try { wait(); }
             catch (InterruptedException e) {}
         }

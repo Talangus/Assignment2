@@ -13,16 +13,18 @@ import java.util.concurrent.atomic.AtomicInteger;
  * Do not add to this class nothing but a single constructor, getters and setters.
  */
 public class Diary {
-    static Diary instance;
+//    static Diary instance=null;
     AtomicInteger totalAttacks = new AtomicInteger(0);
     HashMap<MicroService,Long> attackersFinishTime;
     HashMap<MicroService,Long> terminationTimes;
     long R2D2Deactivate;
 
+    private static class SingletonHolder{
+        private static Diary instance=new Diary();
+    }
+
     public static Diary getInstance(){
-        if(instance==null)
-            instance=new Diary();
-        return instance;
+        return SingletonHolder.instance;
     }
 
     private Diary(){
@@ -40,4 +42,6 @@ public class Diary {
             val=totalAttacks.get();
         } while(!totalAttacks.compareAndSet(val,val+1));
     }
+
+    public AtomicInteger getTotalAttacks(){return totalAttacks;}
 }

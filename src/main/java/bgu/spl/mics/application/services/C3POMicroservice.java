@@ -26,7 +26,8 @@ public class C3POMicroservice extends MicroService {
     protected void initialize() {
         bus.register(this);
         subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
-        subscribeBroadcast(NoMoreAttackBroadcast.class, c->{ diary.addAttackerFinishTime(this,System.currentTimeMillis()); });
+        subscribeBroadcast(NoMoreAttackBroadcast.class, c->{ diary.addAttackerFinishTime(this,System.currentTimeMillis()); sendBroadcast(new FinishedAttackingBrodcast());
+            System.out.println("C3P0 send finished attacking broadcast"); });
         subscribeEvent(AttackEvent.class,new AttackEventCallback());
     }
 }

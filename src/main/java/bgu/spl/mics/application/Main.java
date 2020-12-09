@@ -8,8 +8,7 @@ import bgu.spl.mics.application.misc.Input;
 import bgu.spl.mics.application.misc.Parser;
 import bgu.spl.mics.application.passiveObjects.Diary;
 import bgu.spl.mics.application.passiveObjects.Ewoks;
-import bgu.spl.mics.application.services.HanSoloMicroservice;
-import bgu.spl.mics.application.services.LeiaMicroservice;
+import bgu.spl.mics.application.services.*;
 import com.google.gson.JsonParser;
 
 import java.io.*;
@@ -28,15 +27,34 @@ import java.io.FileReader;
  * In the end, you should output a JSON.
  */
 public class Main {
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, InterruptedException {
 		Input input=Parser.getInputFromJson("/home/spl211/IdeaProjects/Assignment2/input.json");
 		MessageBus bus=MessageBusImpl.getInstance();
 		Ewoks ewoks = Ewoks.createInstance(input.getEwoks());
 		Diary diary= Diary.getInstance();
-	   	MicroService han = new HanSoloMicroservice();
-  		han.run();
 		MicroService leah = new LeiaMicroservice(input.getAttacks());
- 		leah.run();                                                                          
+	   	MicroService han = new HanSoloMicroservice();
+		MicroService c3p0 = new C3POMicroservice();
+		MicroService r2D2 = new R2D2Microservice(input.getR2D2());
+		MicroService lando = new LandoMicroservice(input.getLando());
+		Thread threadLeah = new Thread(leah);
+		Thread threadHan= new Thread(han);
+		Thread threadC3P0 = new Thread(c3p0);
+		Thread threadR2D2= new Thread(r2D2);
+//		Thread threadLando = new Thread(lando);
+		threadHan.start();
+		threadC3P0.start();
+		threadLeah.start();
+		threadR2D2.start();
+//		threadLando.start();
+//		{
+//			threadLeah.join();
+//			threadHan.join();
+//			threadC3P0.join();
+//			threadR2D2.join();
+//			threadLando.join();
+//		}
+//		System.out.print("attacks"+diary.getTotalAttacks());
 	}
 }
 

@@ -2,15 +2,13 @@ package bgu.spl.mics.application.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
 import bgu.spl.mics.Callback;
 import bgu.spl.mics.Event;
 import bgu.spl.mics.MessageBusImpl;
 import bgu.spl.mics.MicroService;
-import bgu.spl.mics.application.messages.AttackEvent;
-import bgu.spl.mics.application.messages.FinishedAttackingBrodcast;
-import bgu.spl.mics.application.messages.NoMoreAttackBroadcast;
-import bgu.spl.mics.application.messages.TerminationBrodcast;
+import bgu.spl.mics.application.messages.*;
 import bgu.spl.mics.application.passiveObjects.Attack;
 
 /**
@@ -23,19 +21,22 @@ import bgu.spl.mics.application.passiveObjects.Attack;
  */
 public class LeiaMicroservice extends MicroService {
 	private Attack[] attacks;
-
+    private boolean hanFinsihed;
+    private boolean c3p0Finsihed;
 
 
     public LeiaMicroservice(Attack[] attacks) {
         super("Leia");
 		this.attacks = attacks;
+		hanFinsihed=false;
+		c3p0Finsihed=false;
     }
 
     @Override
     protected void initialize() {
     	bus.register(this);
     	subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
-        subscribeBroadcast(FinishedAttackingBrodcast.class, (c -> CheckMyEvents()));
+        subscribeBroadcast(FinishedAttackingBrodcast.class, (c -> { System.out.println("got finished attacking event"); CheckMyEvents(); }));
         SendAttacks();
         sendBroadcast(new NoMoreAttackBroadcast());
     }
@@ -47,10 +48,14 @@ public class LeiaMicroservice extends MicroService {
         }
     }
     private void CheckMyEvents(){
+        System.out.println("checking events");
         for(Event key : myEvents.keySet()){
             myEvents.get(key).get();
             myEvents.remove(key);
         }
+
+        System.out.println("sending deactivation event");//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        sendEvent(new DeactivationEvent());
     }
 
 }

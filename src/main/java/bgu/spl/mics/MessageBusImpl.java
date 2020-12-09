@@ -14,7 +14,7 @@ import java.util.concurrent.LinkedBlockingQueue;
  */
 public class MessageBusImpl implements MessageBus {
 
-	private static MessageBusImpl instance;
+	private static MessageBusImpl instance=null;
 	private  HashMap<Class<? extends Message>, Queue<MicroService>> SubscribersMap;
 	private  HashMap<MicroService, LinkedBlockingQueue<Message>> MessageQueueMap;
 	private  HashMap<Event, Future> EventFutureMap;
