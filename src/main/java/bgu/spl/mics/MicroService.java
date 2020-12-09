@@ -150,7 +150,6 @@ public abstract class MicroService implements Runnable {
     protected final void terminate() {
         bus.unregister(this);
     	readyToTerminate=true;
-    	diary.addTerminationTime(this,System.currentTimeMillis());
     }
 
     /**

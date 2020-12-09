@@ -35,7 +35,7 @@ public class LeiaMicroservice extends MicroService {
     @Override
     protected void initialize() {
     	bus.register(this);
-    	subscribeBroadcast(TerminationBrodcast.class,(c -> terminate()));
+    	subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setLeiaTerminate(System.currentTimeMillis());});
 //        subscribeBroadcast(FinishedAttackingBrodcast.class, (c -> { System.out.println("got finished attacking event"); CheckMyEvents(); }));
         SendAttacks();
         sendBroadcast(new NoMoreAttackBroadcast());
