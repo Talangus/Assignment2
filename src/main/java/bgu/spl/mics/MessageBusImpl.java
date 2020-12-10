@@ -1,8 +1,6 @@
 package bgu.spl.mics;
 
-
 import java.util.HashMap;
-
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
 
@@ -18,8 +16,6 @@ public class MessageBusImpl implements MessageBus {
 	private  HashMap<MicroService, LinkedBlockingQueue<Message>> MessageQueueMap;
 	private  HashMap<Event, Future> EventFutureMap;
 
-
-	
 	@Override
 	public <T> void subscribeEvent(Class<? extends Event<T>> type, MicroService m) {
 		subscribeMessage(type, m);

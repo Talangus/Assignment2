@@ -2,10 +2,9 @@ package bgu.spl.mics.application.services;
 
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.messages.BombDestroyerEvent;
-import bgu.spl.mics.application.messages.DeactivationEvent;
 import bgu.spl.mics.application.messages.TerminationBrodcast;
-import bgu.spl.mics.application.misc.Input;
-import bgu.spl.mics.application.misc.Parser;
+
+
 
 /**
  * LandoMicroservice
