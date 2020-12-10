@@ -153,10 +153,6 @@ public abstract class MicroService implements Runnable {
     	readyToTerminate=true;
     }
 
-    protected Set<Class<? extends Message>> mySubscriptions(){
-         return callbackMap.keySet();
-    }
-
     /**
      * @return the name of the service - the service name is given to it in the
      *         construction time and is used mainly for debugging purposes.
