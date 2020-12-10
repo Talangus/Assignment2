@@ -1,8 +1,6 @@
 package bgu.spl.mics.application.passiveObjects;
 
 
-import bgu.spl.mics.MessageBus;
-import bgu.spl.mics.application.misc.Input;
 
 import java.util.LinkedList;
 import java.util.List;

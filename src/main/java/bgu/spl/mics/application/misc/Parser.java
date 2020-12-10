@@ -1,7 +1,4 @@
 package bgu.spl.mics.application.misc;
-import bgu.spl.mics.application.passiveObjects.Attack;
-import bgu.spl.mics.application.passiveObjects.Ewok;
-import bgu.spl.mics.application.passiveObjects.Ewoks;
 
 import com.google.gson.Gson;
 

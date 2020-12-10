@@ -4,8 +4,6 @@ import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.messages.BombDestroyerEvent;
 import bgu.spl.mics.application.messages.DeactivationEvent;
 import bgu.spl.mics.application.messages.TerminationBrodcast;
-import bgu.spl.mics.application.misc.Input;
-import bgu.spl.mics.application.misc.Parser;
 
 /**
  * R2D2Microservices is in charge of the handling {@link DeactivationEvent}.
@@ -32,11 +30,8 @@ public class R2D2Microservice extends MicroService {
         {
             try{ Thread.sleep(duration);}
             catch (InterruptedException e){}
-//            System.out.printf("r2d2 boker tov");
             diary.setR2D2Deactivate(System.currentTimeMillis());
             sendEvent(new BombDestroyerEvent());
-//            System.out.println("deactivation");//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         }));
-
     }
 }

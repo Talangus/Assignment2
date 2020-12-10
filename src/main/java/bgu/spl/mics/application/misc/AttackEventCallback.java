@@ -14,17 +14,11 @@ import java.util.List;
 
 public class AttackEventCallback implements Callback<AttackEvent> {
     public void call(AttackEvent c){
-//        System.out.println("attack");//!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         List<Integer> resources = c.getAttackinfo().getSerials();
         int duration = c.getAttackinfo().getDuration();
         Ewoks EwoksInstance = Ewoks.getInstance();
         List<Ewok> ewoks = EwoksInstance.getEwoks();
-        ewoks.sort(new Comparator<Ewok>() {
-            @Override
-            public int compare(Ewok o1, Ewok o2) {
-                return o1.getSerialNumber()-o2.getSerialNumber();
-            }
-        });
+        ewoks.sort(Comparator.comparingInt(Ewok::getSerialNumber));
         for(int i = 0; i<resources.size(); i++){                        //ewoks is ordered, thus resources acquiring is ordered to prevent deadlocks.
             ewoks.get(i).acquire();
         }
@@ -35,7 +29,6 @@ public class AttackEventCallback implements Callback<AttackEvent> {
         MessageBusImpl.getInstance().complete(c,true);
         Diary diary=Diary.getInstance();
         diary.incrementTotalAttacks();
-//        System.out.println("Total attacks now: "+diary.getTotalAttacks());
 
     }
 }

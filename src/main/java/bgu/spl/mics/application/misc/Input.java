@@ -1,5 +1,4 @@
 package bgu.spl.mics.application.misc;
-
 import bgu.spl.mics.application.passiveObjects.Attack;
 
 public class Input {

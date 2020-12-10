@@ -35,6 +35,7 @@ public class LeiaMicroservice extends MicroService {
     @Override
     protected void initialize() {
     	bus.register(this);
+        System.out.println("lead started");
     	subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setLeiaTerminate(System.currentTimeMillis());});
 //        subscribeBroadcast(FinishedAttackingBrodcast.class, (c -> { System.out.println("got finished attacking event"); CheckMyEvents(); }));
         SendAttacks();
@@ -43,9 +44,11 @@ public class LeiaMicroservice extends MicroService {
     }
 
     private void SendAttacks(){
+        System.out.println("starting send attack");
         for (Attack obj: attacks) {
             AttackEvent curr = new AttackEvent(obj);
             myEvents.put(curr,sendEvent(curr));
+            System.out.println("attack sent");
         }
     }
     private void CheckMyEvents(){

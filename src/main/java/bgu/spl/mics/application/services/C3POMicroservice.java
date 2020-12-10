@@ -2,7 +2,6 @@ package bgu.spl.mics.application.services;
 
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.messages.AttackEvent;
-import bgu.spl.mics.application.messages.FinishedAttackingBrodcast;
 import bgu.spl.mics.application.messages.NoMoreAttackBroadcast;
 import bgu.spl.mics.application.messages.TerminationBrodcast;
 import bgu.spl.mics.application.misc.AttackEventCallback;
