@@ -4,6 +4,7 @@ import bgu.spl.mics.application.passiveObjects.Diary;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -146,6 +147,10 @@ public abstract class MicroService implements Runnable {
     protected final void terminate() {
         bus.unregister(this);
     	readyToTerminate=true;
+    }
+
+    protected Set<Class<? extends Message>> mySubscriptions(){
+         return callbackMap.keySet();
     }
 
     /**

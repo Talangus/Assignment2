@@ -18,6 +18,7 @@ public class MessageBusImpl implements MessageBus {
 	private  HashMap<Class<? extends Message>, Queue<MicroService>> SubscribersMap;
 	private  HashMap<MicroService, LinkedBlockingQueue<Message>> MessageQueueMap;
 	private  HashMap<Event, Future> EventFutureMap;
+	private LinkedBlockingQueue<Message> awaitingMessages;
 
 	
 	@Override
@@ -66,6 +67,9 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public void unregister(MicroService m) {
+		for(Class<?extends Message> c: m.mySubscriptions()){
+			SubscribersMap.get(c).remove(m);
+		}
 		MessageQueueMap.remove(m);
 	}
 
@@ -87,6 +91,7 @@ public class MessageBusImpl implements MessageBus {
 		SubscribersMap=new HashMap<Class<? extends Message>, Queue<MicroService>>();
 		MessageQueueMap=new HashMap<MicroService,LinkedBlockingQueue<Message>>();
 		EventFutureMap=new HashMap<Event, Future>();
+		awaitingMessages=new LinkedBlockingQueue<>();
 	}
 
 	//checks if Message of type "type" has a queue in Sub map, creates one if it doesn't
