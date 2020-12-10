@@ -1,6 +1,5 @@
 package bgu.spl.mics;
 
-import bgu.spl.mics.application.messages.NewSubBroadcast;
 
 import java.util.HashMap;
 import java.util.LinkedList;
@@ -102,7 +101,6 @@ public class MessageBusImpl implements MessageBus {
 		if(q==null) {
 			q = new LinkedBlockingQueue<MicroService>();
 			SubscribersMap.put(type, q);
-			sendBroadcast(new NewSubBroadcast(type));
 		}
 		return q;
 	}
