@@ -4,6 +4,7 @@ import bgu.spl.mics.application.passiveObjects.Diary;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 
 
 /**
@@ -68,7 +69,7 @@ public abstract class MicroService implements Runnable {
      */
     protected final <T, E extends Event<T>> void subscribeEvent(Class<E> type, Callback<E> callback) {
     	callbackMap.put(type, callback);
-    	bus.subscribeEvent(type,this);
+    	//bus.subscribeEvent(type,this);
     }
 
     /**
@@ -93,7 +94,7 @@ public abstract class MicroService implements Runnable {
      */
     protected final <B extends Broadcast> void subscribeBroadcast(Class<B> type, Callback<B> callback) {
     	callbackMap.put(type, callback);
-    	bus.subscribeBroadcast(type,this);
+    	//bus.subscribeBroadcast(type,this);
     }
 
     /**
@@ -108,7 +109,7 @@ public abstract class MicroService implements Runnable {
      *         			micro-service processing this event.
      * 	       			null in case no micro-service has subscribed to {@code e.getClass()}.
      */
-    protected final <T> Future<T> sendEvent(Event<T> e) {
+    protected synchronized final <T> Future<T> sendEvent(Event<T> e) {
         return bus.sendEvent(e);
     }
 
@@ -120,6 +121,10 @@ public abstract class MicroService implements Runnable {
      */
     protected final void sendBroadcast(Broadcast b) { bus.sendBroadcast(b);}
 
+
+    protected Set<Class<? extends Message>> mySubscriptions(){
+        return callbackMap.keySet();
+    }
     /**
      * Completes the received request {@code e} with the result {@code result}
      * using the message-bus.
