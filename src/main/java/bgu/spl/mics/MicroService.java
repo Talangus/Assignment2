@@ -109,7 +109,7 @@ public abstract class MicroService implements Runnable {
      *         			micro-service processing this event.
      * 	       			null in case no micro-service has subscribed to {@code e.getClass()}.
      */
-    protected synchronized final <T> Future<T> sendEvent(Event<T> e) {
+    protected final <T> Future<T> sendEvent(Event<T> e) {
         return bus.sendEvent(e);
     }
 
@@ -171,7 +171,6 @@ public abstract class MicroService implements Runnable {
         while(!readyToTerminate){
             try {
                 Message m= bus.awaitMessage(this);
-//                System.out.println(getName()+":");!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                 callbackMap.get(m.getClass()).call(m);//???????????????
             } catch (InterruptedException e) { }
         }
