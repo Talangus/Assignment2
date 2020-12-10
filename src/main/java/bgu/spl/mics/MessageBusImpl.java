@@ -51,7 +51,7 @@ public class MessageBusImpl implements MessageBus {
 
 	
 	@Override
-	public <T> Future<T> sendEvent(Event<T> e) {
+	public synchronized  <T> Future<T> sendEvent(Event<T> e) {
 		Queue<MicroService> q = checkSubscribers(e.getClass());
 		MicroService m = q.poll();							//Microservice is pulled and pushed back into the Queue for round robin
 		MessageQueueMap.get(m).add(e);
@@ -68,6 +68,9 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public void unregister(MicroService m) {
+		for(Class<?extends Message> c: m.mySubscriptions()){
+			SubscribersMap.get(c).remove(m);
+		}
 		MessageQueueMap.remove(m);
 	}
 
