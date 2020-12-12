@@ -37,7 +37,7 @@ public class MessageBusImpl implements MessageBus {
 	//between getting the message queue and
 
 	@Override
-	public synchronized void sendBroadcast(Broadcast b) {
+	public void sendBroadcast(Broadcast b) {
 		Queue<MicroService> q = SubscribersMap.get(b.getClass());
 		if (q != null) {
 			for (MicroService m : q) {
