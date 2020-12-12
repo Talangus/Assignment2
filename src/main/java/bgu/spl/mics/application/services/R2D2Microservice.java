@@ -20,12 +20,13 @@ public class R2D2Microservice extends MicroService {
     public R2D2Microservice(long duration) {
         super("R2D2");
         this.duration=duration;
+        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setR2D2Terminate(System.currentTimeMillis());});//makes sure that every microservice will subscribe to termination before termination broadcast is sent
     }
 
     @Override
     protected void initialize() {
-        bus.register(this);
-        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setR2D2Terminate(System.currentTimeMillis());});
+//        bus.register(this);
+//        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setR2D2Terminate(System.currentTimeMillis());});
         subscribeEvent(DeactivationEvent.class,(c ->
         {
             try{ Thread.sleep(duration);}

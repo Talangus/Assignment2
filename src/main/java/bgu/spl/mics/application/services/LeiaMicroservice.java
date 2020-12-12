@@ -26,12 +26,13 @@ public class LeiaMicroservice extends MicroService {
     public LeiaMicroservice(Attack[] attacks) {
         super("Leia");
 		this.attacks = attacks;
-	}
+        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setLeiaTerminate(System.currentTimeMillis());});//makes sure that every microservice will subscribe to termination before termination broadcast is sent
+    }
 
     @Override
     protected void initialize() {
-    	bus.register(this);
-        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setLeiaTerminate(System.currentTimeMillis());});
+//    	bus.register(this);
+//      subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setLeiaTerminate(System.currentTimeMillis());});
         SendAttacks();
         sendBroadcast(new NoMoreAttackBroadcast());
         CheckMyEvents();

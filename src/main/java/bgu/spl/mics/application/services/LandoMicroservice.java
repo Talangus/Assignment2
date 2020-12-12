@@ -18,12 +18,13 @@ public class LandoMicroservice  extends MicroService {
     public LandoMicroservice(long duration) {
         super("Lando");
         this.duration=duration;
+        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setLandoTerminate(System.currentTimeMillis());});//makes sure that every microservice will subscribe to termination before termination broadcast is sent
     }
 
     @Override
     protected void initialize() {
-        bus.register(this);
-        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setLandoTerminate(System.currentTimeMillis());});
+//        bus.register(this);
+//        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setLandoTerminate(System.currentTimeMillis());});
         subscribeEvent(BombDestroyerEvent.class,(c ->
         {
             try { Thread.sleep(duration);} catch (InterruptedException e){}

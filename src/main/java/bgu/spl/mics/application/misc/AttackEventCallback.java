@@ -29,6 +29,5 @@ public class AttackEventCallback implements Callback<AttackEvent> {
         MessageBusImpl.getInstance().complete(c,true);
         Diary diary=Diary.getInstance();
         diary.incrementTotalAttacks();
-        System.out.println("attack completed: "+diary.getTotalAttacks());
     }
 }

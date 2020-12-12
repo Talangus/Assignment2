@@ -19,13 +19,14 @@ public class HanSoloMicroservice extends MicroService {
 
     public HanSoloMicroservice() {
         super("Han");
+        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setHanSoloTerminate(System.currentTimeMillis());}); //makes sure that every microservice will subscribe to termination before termination broadcast is sent
     }
 
 
     @Override
     protected void initialize() {
-        bus.register(this);
-        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setHanSoloTerminate(System.currentTimeMillis());});
+//        bus.register(this);
+//        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setHanSoloTerminate(System.currentTimeMillis());});
         subscribeBroadcast(NoMoreAttackBroadcast.class, c->{ diary.setHanSoloFinish(System.currentTimeMillis());});
         subscribeEvent(AttackEvent.class,new AttackEventCallback());
     }

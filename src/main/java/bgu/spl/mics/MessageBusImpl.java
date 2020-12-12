@@ -34,10 +34,10 @@ public class MessageBusImpl implements MessageBus {
 	}
 
 	//send broadcast and send event are synchronized because if there is a contact switch
-	//between t
+	//between getting the message queue and
 
 	@Override
-	public void sendBroadcast(Broadcast b) {
+	public synchronized void sendBroadcast(Broadcast b) {
 		Queue<MicroService> q = SubscribersMap.get(b.getClass());
 		if (q != null) {
 			for (MicroService m : q) {
@@ -48,17 +48,17 @@ public class MessageBusImpl implements MessageBus {
 
 	
 	@Override
-	public synchronized <T> Future<T> sendEvent(Event<T> e) {
+	public  <T> Future<T> sendEvent(Event<T> e) {
 		Queue<MicroService> q = checkSubscribers(e.getClass());
-		MicroService m = q.peek(); //Microservice is pulled and pushed back into the Queue for round robin
-		roundRobin(q);
+		MicroService m = q.peek();
+		roundRobin(q);				//Microservice is pulled and pushed back into the Queue for round robin
 		MessageQueueMap.get(m).add(e);
 		Future<T> f = new Future<>();
 		EventFutureMap.put(e,f);
         return f;
 	}
 
-	public void roundRobin(Queue<MicroService> q){
+	public synchronized void roundRobin(Queue<MicroService> q){
 		if(q.size()>1)
 		{
 			MicroService m=q.poll();
@@ -68,7 +68,7 @@ public class MessageBusImpl implements MessageBus {
 
 	@Override
 	public void register(MicroService m) {
-		synchronized (MessageQueueMap) {
+		synchronized (MessageQueueMap) {// synchronized so that there will not be a contact switch between the time that we have a key in the map and creating our message queue
 			MessageQueueMap.put(m, new LinkedBlockingQueue<Message>());
 		}
 	}
