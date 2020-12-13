@@ -22,7 +22,7 @@ public class Main {
 		MessageBus bus=MessageBusImpl.getInstance();
 		Ewoks ewoks = Ewoks.createInstance(input.getEwoks());
 		Diary diary= Diary.getInstance();
-		for(int i=0;i<=10000;i++) {
+		for(int i=0;i<=1;i++) {
 			System.out.println("iteration: "+(i+1));
 			MicroService leah = new LeiaMicroservice(input.getAttacks());
 			MicroService han = new HanSoloMicroservice();

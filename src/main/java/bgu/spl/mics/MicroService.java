@@ -44,7 +44,7 @@ public abstract class MicroService implements Runnable {
     	bus = MessageBusImpl.getInstance();
     	diary=Diary.getInstance();
     	myEvents = new HashMap<Event, Future>();
-    	bus.register(this);//makes sure that every microservice will have his messagelist created before initialization
+
     }
 
     /**
@@ -168,7 +168,7 @@ public abstract class MicroService implements Runnable {
      */
     @Override
     public final void run() {
-//        bus.register(this);
+        bus.register(this);
         initialize();
         while(!readyToTerminate){
             try {

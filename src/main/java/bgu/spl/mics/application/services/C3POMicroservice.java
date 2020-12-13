@@ -19,13 +19,13 @@ public class C3POMicroservice extends MicroService {
 
     public C3POMicroservice() {
         super("C3PO");
-        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setC3P0Terminate(System.currentTimeMillis());}); //makes sure that every microservice will subscribe to termination before termination broadcast is sent
+
     }
 
     @Override
     protected void initialize() {
-//        bus.register(this);
-//        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setC3P0Terminate(System.currentTimeMillis());}); //----------------
+
+        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setC3P0Terminate(System.currentTimeMillis());}); //----------------
         subscribeBroadcast(NoMoreAttackBroadcast.class, c->{ diary.setC3P0Finish(System.currentTimeMillis());});
         subscribeEvent(AttackEvent.class,new AttackEventCallback());
     }
