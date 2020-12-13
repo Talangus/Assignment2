@@ -2,6 +2,7 @@ package bgu.spl.mics;
 
 import java.util.HashMap;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -15,7 +16,7 @@ public class MessageBusImpl implements MessageBus {
 	private static MessageBusImpl instance=null;
 	private  HashMap<Class<? extends Message>, Queue<MicroService>> SubscribersMap;
 	private  HashMap<MicroService, LinkedBlockingQueue<Message>> MessageQueueMap;
-	private  HashMap<Event, Future> EventFutureMap;
+	private  ConcurrentHashMap<Event, Future> EventFutureMap;
 	private AtomicInteger UninitializedThreads;
 
 	@Override
@@ -100,17 +101,19 @@ public class MessageBusImpl implements MessageBus {
 	private MessageBusImpl(){
 		SubscribersMap=new HashMap<Class<? extends Message>, Queue<MicroService>>();
 		MessageQueueMap=new HashMap<MicroService,LinkedBlockingQueue<Message>>();
-		EventFutureMap=new HashMap<Event, Future>();
+		EventFutureMap=new ConcurrentHashMap<Event, Future>();
 	}
 
 	//checks if Message of type "type" has a queue in Sub map, creates one if it doesn't
-	private synchronized  <T> Queue<MicroService> getQueuefromSubMap(Class<? extends Message> type){
-		Queue<MicroService> q =SubscribersMap.get(type);
-		if(q==null) {
-			q = new LinkedBlockingQueue<MicroService>();
-			SubscribersMap.put(type, q);
+	private  <T> Queue<MicroService> getQueuefromSubMap(Class<? extends Message> type){
+		synchronized (SubscribersMap) {
+			Queue<MicroService> q = SubscribersMap.get(type);
+			if (q == null) {
+				q = new LinkedBlockingQueue<MicroService>();
+				SubscribersMap.put(type, q);
+			}
+			return q;
 		}
-		return q;
 	}
 	private synchronized void subscribeMessage(Class<? extends Message> type, MicroService m){
 		Queue<MicroService> subscribersQueue = getQueuefromSubMap(type);						//gets the message's microservice queue
@@ -120,11 +123,16 @@ public class MessageBusImpl implements MessageBus {
 	}
 
 	//makes sure that events of type "type" has subscribers before it is sent
-	private synchronized <T> Queue<MicroService> checkSubscribers(Class<? extends Event> type){
-		while (SubscribersMap.get(type)==null || SubscribersMap.get(type).isEmpty()){
-			try{wait();}catch (InterruptedException e){};
+	private <T> Queue<MicroService> checkSubscribers(Class<? extends Event> type) {
+		synchronized (SubscribersMap) {
+			while (SubscribersMap.get(type) == null || SubscribersMap.get(type).isEmpty()) {
+				try {
+					wait();
+				} catch (InterruptedException e) {}
+				;
+			}
+			return SubscribersMap.get(type);
 		}
-		return SubscribersMap.get(type);
 	}
 
 	public void setUninitializedThreads(AtomicInteger uninitializedThreads) {
