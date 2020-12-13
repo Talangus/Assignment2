@@ -10,12 +10,13 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicInteger;
 
 public class Initializer {
 
     public static void runProgram(String filepath) throws IOException {
         Input input=Parser.getInputFromJson(filepath);
-        MessageBus bus= MessageBusImpl.getInstance();
+        MessageBusImpl bus= MessageBusImpl.getInstance();
         Ewoks ewoks = Ewoks.createInstance(input.getEwoks());
         Diary diary= Diary.getInstance();
         MicroService leah = new LeiaMicroservice(input.getAttacks());
@@ -28,6 +29,7 @@ public class Initializer {
         Thread threadC3P0 = new Thread(c3p0);
         Thread threadR2D2= new Thread(r2D2);
         Thread threadLando = new Thread(lando);
+        bus.setUninitializedThreads(new AtomicInteger(5));
         threadHan.start();
         threadC3P0.start();
         threadLeah.start();

@@ -3,6 +3,7 @@ package bgu.spl.mics;
 import java.util.HashMap;
 import java.util.Queue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /**
  * The {@link MessageBusImpl class is the implementation of the MessageBus interface.
@@ -15,6 +16,7 @@ public class MessageBusImpl implements MessageBus {
 	private  HashMap<Class<? extends Message>, Queue<MicroService>> SubscribersMap;
 	private  HashMap<MicroService, LinkedBlockingQueue<Message>> MessageQueueMap;
 	private  HashMap<Event, Future> EventFutureMap;
+	private AtomicInteger UninitializedThreads;
 
 	@Override
 	public <T> void subscribeEvent(Class<? extends Event<T>> type, MicroService m) {
@@ -125,5 +127,18 @@ public class MessageBusImpl implements MessageBus {
 		return SubscribersMap.get(type);
 	}
 
+	public void setUninitializedThreads(AtomicInteger uninitializedThreads) {
+		UninitializedThreads = uninitializedThreads;
+	}
 
+	public AtomicInteger getUninitializedThreads() {
+		return UninitializedThreads;
+	}
+
+	public void decreaseUninitializedThreads(){
+		int val;
+		do{
+			val = UninitializedThreads.get();
+		} while (!UninitializedThreads.compareAndSet(val,val -1));
+	}
 }

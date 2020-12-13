@@ -3,6 +3,7 @@ package bgu.spl.mics.application.services;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicInteger;
 
 import bgu.spl.mics.Callback;
 import bgu.spl.mics.Event;
@@ -31,10 +32,12 @@ public class LeiaMicroservice extends MicroService {
 
     @Override
     protected void initialize() {
-    	try{ Thread.sleep(150);} catch (InterruptedException e){};      //Leia sleeps so other service can initialize before the program flow starts
-        subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setLeiaTerminate(System.currentTimeMillis());});
+    	subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setLeiaTerminate(System.currentTimeMillis());});
+    	try{Thread.sleep(200);}catch (InterruptedException e){};    //leia sleeps so that all other threads could initialize before program begins
+    	while (!(bus.getUninitializedThreads().get()== 1)){}                 // final check (busy wait, no Sync)
         SendAttacks();
         sendBroadcast(new NoMoreAttackBroadcast());
+        System.out.println("lea sent NMA brodcast");
         CheckMyEvents();
     }
 
@@ -47,7 +50,9 @@ public class LeiaMicroservice extends MicroService {
     private void CheckMyEvents(){
         for(Event key : myEvents.keySet()){
             myEvents.get(key).get();
+            System.out.println("event resolved");
         }
         sendEvent(new DeactivationEvent());
+        System.out.println("sent deactivation brodcast");
     }
 }

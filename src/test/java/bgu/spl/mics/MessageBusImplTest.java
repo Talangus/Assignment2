@@ -1,13 +1,13 @@
-package bgu.spl.mics;
-
-import bgu.spl.mics.application.messages.AttackEvent;
-import bgu.spl.mics.application.services.*;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
-//empty tests according to office hours and forum requirements
+//package bgu.spl.mics;
+//
+//import bgu.spl.mics.application.messages.AttackEvent;
+//import bgu.spl.mics.application.services.*;
+//import org.junit.jupiter.api.AfterEach;
+//import org.junit.jupiter.api.BeforeEach;
+//import org.junit.jupiter.api.Test;
+//
+//import static org.junit.jupiter.api.Assertions.*;
+////empty tests according to office hours and forum requirements
 //class MessageBusImplTest<T> {
 //    private MessageBus bus;
 //

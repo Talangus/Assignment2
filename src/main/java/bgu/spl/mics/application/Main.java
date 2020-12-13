@@ -11,6 +11,7 @@ import bgu.spl.mics.application.services.*;
 import com.google.gson.*;
 
 import java.io.*;
+import java.util.concurrent.atomic.AtomicInteger;
 
 /** This is the Main class of the application. You should parse the input file,
  * create the different components of the application, and run the system.
@@ -18,11 +19,12 @@ import java.io.*;
  */
 public class Main {
 	public static void main(String[] args) throws IOException, InterruptedException {
-		Input input=Parser.getInputFromJson(args[0]);
-		MessageBus bus=MessageBusImpl.getInstance();
+		Input input=Parser.getInputFromJson("/home/spl211/Desktop/ass2Test/input.json");
+		MessageBusImpl bus=MessageBusImpl.getInstance();
+		bus.setUninitializedThreads(new AtomicInteger(5));
 		Ewoks ewoks = Ewoks.createInstance(input.getEwoks());
 		Diary diary= Diary.getInstance();
-		for(int i=0;i<=1;i++) {
+		for(int i=0;i<=5000;i++) {
 			System.out.println("iteration: "+(i+1));
 			MicroService leah = new LeiaMicroservice(input.getAttacks());
 			MicroService han = new HanSoloMicroservice();
@@ -51,16 +53,21 @@ public class Main {
 				System.out.println("HANSOLO DID NOT RUN!!!!!!!!!!!!!!!");
 			if(diary.getC3POFinish()==0)
 				System.out.println("C3P0 DID NOT RUN!!!!!!!!!!!!!!!!!!");
-			System.out.println();
-			diary.getTotalAttacks().compareAndSet(7,0);
+			System.out.println(diary.getTotalAttacks().compareAndSet(7,0));
+			bus.setUninitializedThreads(new AtomicInteger(5));
+
 		}
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		FileWriter writer = new FileWriter("/home/spl211/output.json");
 		gson.toJson(diary,writer);
 		writer.flush();
 		writer.close();
+
+
+		}
+
 	}
-}
+
 
 
 
