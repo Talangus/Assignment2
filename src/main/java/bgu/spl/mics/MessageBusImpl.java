@@ -36,8 +36,8 @@ public class MessageBusImpl implements MessageBus {
 			temp.resolve(result);
 	}
 
-	//send broadcast and send event are synchronized because if there is a contact switch
-	//between getting the message queue and
+
+
 
 	@Override
 	public void sendBroadcast(Broadcast b) {
@@ -55,9 +55,10 @@ public class MessageBusImpl implements MessageBus {
 		Queue<MicroService> q = checkSubscribers(e.getClass());
 		MicroService m = q.peek();
 		roundRobin(q);				//Microservice is pulled and pushed back into the Queue for round robin
-		MessageQueueMap.get(m).add(e);
+
 		Future<T> f = new Future<>();
 		EventFutureMap.put(e,f);
+		MessageQueueMap.get(m).add(e);
         return f;
 	}
 

@@ -30,7 +30,6 @@ public class Diary {
         totalAttacks.compareAndSet(totalAttacks.get(),0);
     }
 
-
     private static class SingletonHolder{
         private static Diary instance=new Diary();
     }
@@ -39,8 +38,7 @@ public class Diary {
         return SingletonHolder.instance;
     }
 
-    private Diary(){
-    }
+    private Diary(){}
 
     public void setHanSoloFinish(long duration){HanSoloFinish=duration;}
     public void setC3P0Finish(long duration){C3POFinish=duration;}
@@ -50,7 +48,6 @@ public class Diary {
     public void setR2D2Terminate(long duration){R2D2Terminate=duration;}
     public void setLandoTerminate(long duration){LandoTerminate=duration;}
     public void setR2D2Deactivate(long time){R2D2Deactivate=time;}
-
     public long getHanSoloFinish(){return HanSoloFinish;}
     public long getC3POFinish(){return C3POFinish;}
 

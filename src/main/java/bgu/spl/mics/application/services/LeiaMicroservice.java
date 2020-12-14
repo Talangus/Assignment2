@@ -1,13 +1,7 @@
 package bgu.spl.mics.application.services;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.TimeUnit;
-import java.util.concurrent.atomic.AtomicInteger;
 
-import bgu.spl.mics.Callback;
 import bgu.spl.mics.Event;
-import bgu.spl.mics.MessageBusImpl;
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.messages.*;
 import bgu.spl.mics.application.passiveObjects.Attack;
@@ -33,11 +27,11 @@ public class LeiaMicroservice extends MicroService {
     @Override
     protected void initialize() {
     	subscribeBroadcast(TerminationBrodcast.class,c ->{ terminate(); diary.setLeiaTerminate(System.currentTimeMillis());});
-    	try{Thread.sleep(200);}catch (InterruptedException e){};    //leia sleeps so that all other threads could initialize before program begins
-    	while (!(bus.getUninitializedThreads().get()== 1)){}                 // final check (busy wait, no Sync)
+    	try{Thread.sleep(200);}catch (InterruptedException e){};    //leia sleeps so that all other threads could initialize before program flow begins
+    	while (!(bus.getUninitializedThreads().get()== 1)){}                 // final check (busy wait, no Sync). makes sure she is the only uninitialized thread
         SendAttacks();
         sendBroadcast(new NoMoreAttackBroadcast());
-        System.out.println("lea sent NMA brodcast");
+
         CheckMyEvents();
     }
 
@@ -47,12 +41,11 @@ public class LeiaMicroservice extends MicroService {
             myEvents.put(curr,sendEvent(curr));
         }
     }
+
     private void CheckMyEvents(){
         for(Event key : myEvents.keySet()){
             myEvents.get(key).get();
-            System.out.println("event resolved");
         }
         sendEvent(new DeactivationEvent());
-        System.out.println("sent deactivation brodcast");
     }
 }

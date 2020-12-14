@@ -1,6 +1,6 @@
 package bgu.spl.mics.application.misc;
 
-import bgu.spl.mics.MessageBus;
+
 import bgu.spl.mics.MessageBusImpl;
 import bgu.spl.mics.MicroService;
 import bgu.spl.mics.application.passiveObjects.Diary;

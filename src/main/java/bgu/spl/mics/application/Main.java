@@ -19,13 +19,14 @@ import java.util.concurrent.atomic.AtomicInteger;
  */
 public class Main {
 	public static void main(String[] args) throws IOException, InterruptedException {
-		Input input=Parser.getInputFromJson("/home/spl211/Desktop/ass2Test/input.json");
-		MessageBusImpl bus=MessageBusImpl.getInstance();
-		bus.setUninitializedThreads(new AtomicInteger(5));
-		Ewoks ewoks = Ewoks.createInstance(input.getEwoks());
-		Diary diary= Diary.getInstance();
+		Input input=Parser.getInputFromJson("/home/spl211/Desktop/ass2Test/input4.json");
+
 		for(int i=0;i<=5000;i++) {
 			System.out.println("iteration: "+(i+1));
+			MessageBusImpl bus=MessageBusImpl.getInstance();
+			bus.setUninitializedThreads(new AtomicInteger(5));
+			Ewoks ewoks = Ewoks.createInstance(input.getEwoks());
+			Diary diary= Diary.getInstance();
 			MicroService leah = new LeiaMicroservice(input.getAttacks());
 			MicroService han = new HanSoloMicroservice();
 			MicroService c3p0 = new C3POMicroservice();
@@ -53,13 +54,13 @@ public class Main {
 				System.out.println("HANSOLO DID NOT RUN!!!!!!!!!!!!!!!");
 			if(diary.getC3POFinish()==0)
 				System.out.println("C3P0 DID NOT RUN!!!!!!!!!!!!!!!!!!");
-			System.out.println(diary.getTotalAttacks().compareAndSet(7,0));
+			System.out.println("total attacks is correct: "+ diary.getTotalAttacks().compareAndSet(1,0));
 			bus.setUninitializedThreads(new AtomicInteger(5));
 
 		}
 		Gson gson = new GsonBuilder().setPrettyPrinting().create();
 		FileWriter writer = new FileWriter("/home/spl211/output.json");
-		gson.toJson(diary,writer);
+		//gson.toJson(diary,writer);
 		writer.flush();
 		writer.close();
 
